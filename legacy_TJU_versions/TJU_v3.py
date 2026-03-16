@@ -41,10 +41,10 @@ class TJU_v3(Optimizer):
             Scaling factor for approximate Hessian contribution. Default: 0.1
     """
     r"""
-    TJU_v3_improved: 在 adamWa 基础上增添三大改进：
-    1）在内部引入简单的余弦退火学习率 (可选)，使后期学习率可继续下降。
-    2）将 hessian_scale 缩小到 0.05，减弱近似 Hessian 对二阶动量的过大放大。
-    3）提升 constant 模式下的 clamp 下限（由 1e-4 提升为 1e-3），避免更新步幅过度缩小。如果不需要内部的学习率调度，可将 use_cosine_scheduler = False。  
+    TJU_v3_improved: Three key improvements over adamWa:
+    1) Introduces an optional simple cosine annealing learning rate schedule internally, allowing the LR to continue decaying in later stages.
+    2) Reduces hessian_scale to 0.05, weakening the excessive amplification of the approximate Hessian on the second moment.
+    3) Raises the clamp lower bound in 'constant' mode (from 1e-4 to 1e-3), preventing update step sizes from shrinking too much. Set use_cosine_scheduler=False if internal LR scheduling is not needed.
     """
 
     def __init__(
@@ -59,11 +59,11 @@ class TJU_v3(Optimizer):
         init_lr=None,
         weight_decay=0.0,
         weight_decay_type='L2',
-        hessian_scale=0.05,          # 将默认 hessian_scale 从 0.1 下调为 0.05
-        total_steps=10000,           # 训练总步数(用于余弦退火)
-        use_cosine_scheduler=True    # 是否启用简单的余弦退火
+        hessian_scale=0.05,          # Reduce default hessian_scale from 0.1 to 0.05
+        total_steps=10000,           # Total training steps (used for cosine annealing)
+        use_cosine_scheduler=True    # Whether to enable simple cosine annealing
     ):
-        # 参数合法性检查
+        # Parameter validation
         if not 0.0 < lr:
             raise ValueError(f"Invalid learning rate {lr}")
         if not 0.0 <= eps:
@@ -126,9 +126,9 @@ class TJU_v3(Optimizer):
             with torch.enable_grad():
                 loss = closure()
 
-        # 遍历所有参数组
+        # Iterate over all parameter groups
         for group in self.param_groups:
-            # 取出参数组里的一些超参
+            # Extract hyperparameters from the parameter group
             lr = group['lr']
             beta1, beta2 = group['betas']
             beta_h = group['beta_h']
@@ -143,7 +143,7 @@ class TJU_v3(Optimizer):
             total_steps = group['total_steps']
             use_cosine_scheduler = group['use_cosine_scheduler']
 
-            # 对每个参数进行更新
+            # Update each parameter
             for p in group['params']:
                 if p.grad is None:
                     continue
@@ -151,40 +151,40 @@ class TJU_v3(Optimizer):
                 if grad.is_sparse:
                     raise RuntimeError("TJU_v3_improved does not support sparse gradients")
 
-                # 获取参数的状态字典
+                # Get the state dictionary for the parameter
                 state = self.state[p]
                 if len(state) == 0:
-                    # 初始化状态
+                    # Initialize state
                     state['step'] = 0
-                    state['exp_avg'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # Adam 一阶动量
-                    state['exp_avg_sq'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # Adam 二阶动量
-                    state['approx_hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # 近似 Hessian
+                    state['exp_avg'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # Adam first-order momentum
+                    state['exp_avg_sq'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # Adam second-order momentum
+                    state['approx_hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)  # Approximate Hessian
 
                 step_i = state['step']
                 step_i += 1
                 state['step'] = step_i
 
-                # ====== Warmup 阶段学习率 (线性从 init_lr 到 base_lr) ======
+                # ====== Warmup phase learning rate (linear ramp from init_lr to base_lr) ======
                 if step_i <= warmup_steps:
                     current_lr = (base_lr - init_lr) * (step_i / warmup_steps) + init_lr
                 else:
                     current_lr = base_lr
 
-                # ====== 可选的余弦退火学习率 (后期衰减) ======
+                # ====== Optional cosine annealing learning rate (decay in later stages) ======
                 if use_cosine_scheduler and step_i > warmup_steps:
-                    # 计算在 warmup 结束之后已进行的步数
+                    # Number of steps elapsed since end of warmup
                     t = step_i - warmup_steps
                     T = total_steps - warmup_steps
-                    # 简单余弦退火策略
+                    # Simple cosine annealing strategy
                     if t <= T:
-                        # factor 从 1 (t=0) 降到 0 (t=T)
+                        # factor decreases from 1 (t=0) to 0 (t=T)
                         alpha = 0.5 * (1.0 + np.cos(np.pi * t / T))
                         current_lr = base_lr * alpha
                     else:
-                        # 训练到 total_steps 之后，可以保持更小学习率
+                        # After total_steps, maintain a smaller learning rate
                         current_lr = base_lr * 0.01
 
-                # Adam 状态
+                # Adam state
                 exp_avg = state['exp_avg']
                 exp_avg_sq = state['exp_avg_sq']
                 approx_hessian = state['approx_hessian']
@@ -193,49 +193,49 @@ class TJU_v3(Optimizer):
                 if weight_decay != 0 and weight_decay_type == 'L2':
                     grad = grad.add(p, alpha=weight_decay)
 
-                #=========== (2) 更新 Adam 的一阶、二阶动量 ===========
+                #=========== (2) Update Adam first-order and second-order momentum ===========
                 exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1)
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
 
-                #=========== (3) 偏置修正 ===========
+                #=========== (3) Bias correction ===========
                 bias_correction1 = 1 - beta1 ** step_i
                 bias_correction2 = 1 - beta2 ** step_i
 
                 corrected_first = exp_avg.div(bias_correction1)
                 corrected_second = exp_avg_sq.div(bias_correction2).sqrt_().add_(eps)
 
-                #=========== (4) 近似 Hessian 更新 ===========
-                # delta_grad 可以选用 (grad - corrected_first) 或 (grad - exp_avg)
+                #=========== (4) Approximate Hessian update ===========
+                # delta_grad can use (grad - corrected_first) or (grad - exp_avg)
                 delta_grad = grad - corrected_first
                 approx_hessian.mul_(beta_h).addcmul_(delta_grad, delta_grad, value=1 - beta_h)
 
                 # rebound_mode = 'constant' or 'belief'
-                # constant 模式下，我们提高 clamp_(min=1e-3)
+                # In constant mode, raise clamp_(min=1e-3)
                 if rebound_mode == 'constant':
                     denom_hessian = approx_hessian.abs().clamp_(min=1e-3)
                 else:
-                    # belief 模式可以根据无穷范数调整，避免过小
+                    # In belief mode, adjust based on infinity norm to avoid values too small
                     bound_val = max(delta_grad.norm(p=float('inf')).item(), 1e-5)
                     denom_hessian = torch.max(approx_hessian.abs(), torch.tensor(bound_val, device=p.device))
 
-                # 将 Hessian 以加法的方式融合到 Adam 的二阶动量上
+                # Fuse Hessian into Adam's second moment via addition
                 combined_denom = corrected_second + hessian_scale * denom_hessian
                 combined_denom.add_(eps)
 
-                #=========== (5) 求最终更新方向 ===========
+                #=========== (5) Compute final update direction ===========
                 update_dir = corrected_first.div(combined_denom)
 
-                #=========== (6) 其余 weight decay (decoupled / stable) ===========
+                #=========== (6) Remaining weight decay (decoupled / stable) ===========
                 if weight_decay != 0 and weight_decay_type != 'L2':
                     if weight_decay_type == 'stable':
-                        # 根据 combined_denom 均值进行 scale
+                        # Scale by the mean of combined_denom
                         scaled_decay = weight_decay / max(combined_denom.mean().item(), 1e-8)
                         update_dir.add_(p, alpha=scaled_decay)
                     else:
                         # decoupled
                         update_dir.add_(p, alpha=weight_decay)
 
-                #=========== (7) 更新参数 ===========
+                #=========== (7) Update parameters ===========
                 p.add_(update_dir, alpha=-current_lr)
 
         return loss

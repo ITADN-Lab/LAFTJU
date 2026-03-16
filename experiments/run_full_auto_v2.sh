@@ -89,7 +89,7 @@ log "LAKTJU V2 Full Experiment Pipeline"
 log "GPU: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo 'N/A')"
 log "============================================"
 
-feishu "🚀 实验开始" "blue" "**Pipeline**: LAKTJU V2\\n**GPU**: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo 'N/A')\\n**Tasks**: Adan(6) + LAKTJU(6) = 12 runs"
+feishu "🚀 Experiment started" "blue" "**Pipeline**: LAKTJU V2\\n**GPU**: $(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo 'N/A')\\n**Tasks**: Adan(6) + LAKTJU(6) = 12 runs"
 
 # =============================================================================
 # Phase 1: Clear old LAKTJU results (re-run all 3 seeds)
@@ -150,9 +150,9 @@ for ds in ['cifar10','cifar100']:
             else:
                 lines.append(f'  {opt}: {vals[0]:.2f}% (1 seed)')
 print('\\\\n'.join(lines))
-" 2>/dev/null || echo "结果生成失败")
+" 2>/dev/null || echo "Failed to generate results")
 
-feishu "🎉 全部实验完成" "purple" "$SUMMARY"
+feishu "🎉 All experiments complete" "purple" "$SUMMARY"
 
 log "============================================"
 log "ALL EXPERIMENTS COMPLETE"

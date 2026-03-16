@@ -6,12 +6,12 @@ import math
 
 class Nda_ATJU(Optimizer):
     r"""
-    修正后的TJU_AdamW优化器，保持原TJU_v3精度的同时实现正确解耦权重衰减
+    Revised TJU_AdamW optimizer that maintains the original TJU_v3 precision while implementing correct decoupled weight decay
 
-    关键改进点：
-    1. 修复权重衰减应用方式：使用当前学习率进行缩放 (current_lr * tju_weight_decay)
-    2. 保持原TJU_v3的近似Hessian处理逻辑
-    3. 恢复原参数更新顺序，确保数值稳定性
+    Key improvements:
+    1. Fix weight decay application: scale using current learning rate (current_lr * tju_weight_decay)
+    2. Preserve the original TJU_v3 approximate Hessian handling logic
+    3. Restore the original parameter update order to ensure numerical stability
     """
 
     def __init__(
@@ -43,10 +43,10 @@ class Nda_ATJU(Optimizer):
         self.total_epoch = total_epoch
         self.step_now = 0
 
-        # 参数校验（保持原有严格校验）
+        # Parameter validation (preserve original strict validation)
         if not 0.0 <= tju_weight_decay:
             raise ValueError(f"Invalid tju_weight_decay: {tju_weight_decay}")
-        if weight_decay_type not in ['L2', 'stable', 'AdamW']:  # 修正选项列表
+        if weight_decay_type not in ['L2', 'stable', 'AdamW']:  # corrected options list
             raise ValueError(f"Invalid weight_decay_type: {weight_decay_type}")
         if A_optim not in ['SGD', 'Adam', 'AdamW', None]:
             raise ValueError(f"Invalid A_optim: {A_optim} "
@@ -99,7 +99,7 @@ class Nda_ATJU(Optimizer):
             A_optim = group['A_optim']
 
 
-            # 定义当前的权重值 s
+            # Define the current weight value s
             if self.epoch_now == 1:
                 self.total_epoch = self.total_epoch * (self.step_now + 1)
                 self.epoch_now += 1
@@ -117,99 +117,99 @@ class Nda_ATJU(Optimizer):
                     continue
                 grad = p.grad
                 if grad.is_sparse:
-                    raise RuntimeError("TJU_AdamW_Fixed不支持稀疏梯度")
+                    raise RuntimeError("TJU_AdamW_Fixed does not support sparse gradients")
 
                 state = self.state[p]
-                # 初始化状态（保持原TJU_v3结构）
+                # Initialize state (preserve original TJU_v3 structure)
                 if len(state) == 0:
                     state['step'] = 0
                     state['exp_avg'] = torch.zeros_like(p)
                     state['exp_avg_sq'] = torch.zeros_like(p)
                     state['approx_hessian'] = torch.zeros_like(p)
-                    # sgd历史动量值
+                    # SGD historical momentum value
                     state["momentum_buffer"] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 一阶梯度的指数滑动平均（Adam/W）
+                    # Exponential moving average of first-order gradients (Adam/W)
                     state['exp_avg_grad_A'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 二阶梯度的指数滑动平均(AdamW)
+                    # Exponential moving average of second-order gradients (AdamW)
                     state["exp_avg_sq_grad_A"] = torch.zeros_like(p, memory_format=torch.preserve_format)
 
                 state['step'] += 1
                 step = state['step']
                 self.step_now = step
 
-                # ====== 学习率调度（保持原TJU_v3逻辑） ======
+                # ====== Learning rate schedule (preserve original TJU_v3 logic) ======
                 # current_lr = self._compute_lr(group, step)
                 current_lr = tju_lr
 
-                # ====== 核心参数更新 ======
+                # ====== Core parameter update ======
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
                 approx_hessian = state['approx_hessian']
                 momentum_buffer = state["momentum_buffer"]
                 exp_avg_grad_A = state['exp_avg_grad_A']
                 exp_avg_sq_grad_A = state["exp_avg_sq_grad_A"]
 
-                # 梯度值分配
-                grad_TJU = p.grad  # TJU使用的梯度值
-                grad_A = p.grad  # A_optim使用的梯度值
+                # Gradient value assignment
+                grad_TJU = p.grad  # Gradient value used by TJU
+                grad_A = p.grad  # Gradient value used by A_optim
 
 
-                # (1) L2正则化（保持原逻辑）
+                # (1) L2 regularization (preserve original logic)
                 if group['weight_decay_type'] == 'L2' and group['tju_weight_decay'] != 0:
                     grad_TJU = grad_TJU.add(p, alpha=group['tju_weight_decay'])
 
-                # (2) 更新动量项（保持原TJU_v3数值稳定性）
+                # (2) Update momentum terms (preserve original TJU_v3 numerical stability)
                 exp_avg.mul_(tju_beta1).add_(grad_TJU, alpha=1 - tju_beta1)
                 exp_avg_sq.mul_(tju_beta2).addcmul_(grad_TJU, grad_TJU, value=1 - tju_beta2)
 
-                # (3) 偏置校正（关键！保持原TJU_v3实现）
+                # (3) Bias correction (critical! preserve original TJU_v3 implementation)
                 bias_corr1 = 1 - tju_beta1 ** step
                 bias_corr2 = 1 - tju_beta2 ** step
-                step_size = current_lr / bias_corr1  # 合并学习率与一阶偏置校正
+                step_size = current_lr / bias_corr1  # Combine learning rate with first-order bias correction
 
-                # (4) 近似Hessian处理（保持原TJU_v3的clamp逻辑）
-                delta_grad = grad_TJU - (exp_avg / bias_corr1)  # 修正后的梯度变化量
+                # (4) Approximate Hessian handling (preserve original TJU_v3 clamp logic)
+                delta_grad = grad_TJU - (exp_avg / bias_corr1)  # Corrected gradient change
 
                 approx_hessian.mul_(group['beta_h']).addcmul_(
                     delta_grad, delta_grad, value=1 - group['beta_h'])
 
                 if group['rebound'] == 'constant':
-                    denom_hessian = approx_hessian.abs().clamp_(min=1e-3)  # 保持原v3的clamp下限
+                    denom_hessian = approx_hessian.abs().clamp_(min=1e-3)  # preserve original v3 clamp lower bound
                 else:
                     bound_val = max(delta_grad.norm(p=float('inf')).item(), 1e-5)
                     denom_hessian = torch.max(approx_hessian.abs(),
                                               torch.tensor(bound_val, device=p.device))
 
-                # (5) 组合二阶动量（保持原v3的混合逻辑）
+                # (5) Combine second-order momentum (preserve original v3 mixed logic)
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_corr2)).add_(
                     group['hessian_scale'] * denom_hessian,
                     alpha=1.0
                 ).add_(group['tju_eps'])
 
-                # (6) 计算更新方向（关键修改点！恢复原v3的稳定性）
+                # (6) Compute update direction (critical modification! restore original v3 stability)
                 new_update = exp_avg / denom
 
-                # (7) 处理stable类型权重衰减（保持原v3逻辑）
+                # (7) Handle stable type weight decay (preserve original v3 logic)
                 if group['weight_decay_type'] == 'stable' and group['tju_weight_decay'] != 0:
                     decay_factor = group['tju_weight_decay'] / denom.mean().clamp(min=1e-8)
                     new_update.add_(p, alpha=decay_factor)
 
-                # ====== AdamW类型权重衰减（关键修正！）====== #
-                # 在参数更新时应用解耦衰减（保持与当前学习率无关）
+                # ====== AdamW type weight decay (critical fix!) ====== #
+                # Apply decoupled decay during parameter update (kept independent of current learning rate)
                 if group['weight_decay_type'] == 'AdamW' and group['tju_weight_decay'] != 0:
-                    p.data.mul_(1 - group['tju_weight_decay'] * current_lr)  # 与学习率解耦的关键修改！
+                    p.data.mul_(1 - group['tju_weight_decay'] * current_lr)  # Key fix: decoupled from learning rate!
 
                 updata_TJU = (1 - s) * new_update
 
                 if A_optim == 'SGD':
-                    # SGD 更新部分
+                    # SGD update section
                     grad_A = grad_A.add(p, alpha=a_wd_coef)
-                    # 计算参数更新值（sgd）
+                    # Compute parameter update value (SGD)
                     updata_A = s * (grad_A + momentum * momentum_buffer)
-                    # 存储动量累计值
+                    # Store accumulated momentum value
                     state["momentum_buffer"] = grad_A + momentum * momentum_buffer
 
                 elif A_optim == 'Adam':
-                    # Adam更新部分
+                    # Adam update section
                     grad_A = grad_A.add(p, alpha=a_wd_coef)
                     exp_avg_grad_A = a_beta1 * exp_avg_grad_A + (1 - a_beta1) * grad_A
                     exp_avg_sq_grad_A = a_beta2 * exp_avg_sq_grad_A + (1 - a_beta2) * grad_A ** 2
@@ -222,7 +222,7 @@ class Nda_ATJU(Optimizer):
                     state["exp_avg_sq_grad_A"] = exp_avg_sq_grad_A
 
                 elif A_optim == 'AdamW':
-                    # AdamW 更新部分
+                    # AdamW update section
                     exp_avg_grad_A = a_beta1 * exp_avg_grad_A + (1 - a_beta1) * grad_A
                     exp_avg_sq_grad_A = a_beta2 * exp_avg_sq_grad_A + (1 - a_beta2) * grad_A ** 2
 
@@ -234,17 +234,17 @@ class Nda_ATJU(Optimizer):
                     state["exp_avg_sq_grad_A"] = exp_avg_sq_grad_A
 
 
-                update = -step_size * updata_TJU -a_lr * updata_A   # 注意：step_size已包含学习率和一阶偏置校正
+                update = -step_size * updata_TJU -a_lr * updata_A   # Note: step_size already includes learning rate and first-order bias correction
 
 
-                # (8) 执行参数更新（保持原v3的更新顺序）
+                # (8) Execute parameter update (preserve original v3 update order)
                 p.add_(update)
 
-        print(f'当前s值为： {s}')
+        print(f'Current s value: {s}')
         return loss
 
     def _compute_lr(self, group, step):
-        """学习率调度（精确保持原TJU_v3实现）"""
+        """Learning rate schedule (precisely preserves original TJU_v3 implementation)"""
         if step <= group['warmup']:
             return group['init_lr'] + (group['base_lr'] - group['init_lr']) * step / group['warmup']
 
@@ -256,4 +256,4 @@ class Nda_ATJU(Optimizer):
 
         if t <= T:
             return group['base_lr'] * (0.5 * (1 + math.cos(math.pi * t / T)))
-        return group['base_lr'] * 0.01  # 保持原v3的后训练阶段学习率
+        return group['base_lr'] * 0.01  # preserve original v3 post-training learning rate

@@ -44,7 +44,7 @@ class TJU_v1(Optimizer):
         weight_decay=0, 
         weight_decay_type=None
     ):
-        # -- 参数合法性检查 --
+        # -- Parameter validation --
         if not 0.0 < lr:
             raise ValueError(f"Invalid learning rate value: {lr}")
         if not 0.0 <= eps:
@@ -56,23 +56,23 @@ class TJU_v1(Optimizer):
         if not 0 <= warmup:
             raise ValueError(f"Invalid warmup steps: {warmup} (must be >= 0)")
 
-        # 若未给出 init_lr，则默认 init_lr = lr / 1000
+        # If init_lr is not provided, default to init_lr = lr / 1000
         if init_lr is None:
             init_lr = lr / 1000
         if not 0.0 <= init_lr <= lr:
             raise ValueError(f"Invalid init_lr: {init_lr} (must be in [0, lr])")
 
-        # 权重衰减系数与方式
+        # Weight decay coefficient and type
         if weight_decay < 0.0:
             raise ValueError(f"Invalid weight_decay: {weight_decay} (must be >= 0)")
         if weight_decay_type is None:
-            # 如果 rebound='constant' 则缺省用 L2，否则用 decoupled
+            # If rebound='constant', default to L2; otherwise use decoupled
             weight_decay_type = 'L2' if rebound == 'constant' else 'decoupled'
         if weight_decay_type not in ['L2', 'decoupled', 'stable']:
             raise ValueError(f"Invalid weight_decay_type: {weight_decay_type} "
                              "(must be 'L2', 'decoupled', or 'stable')")
 
-        # 使用字典统一存储默认超参数
+        # Store all default hyperparameters in a dictionary
         defaults = dict(
             lr=lr,
             beta=beta,
@@ -106,7 +106,7 @@ class TJU_v1(Optimizer):
             with torch.enable_grad():
                 loss = closure()
 
-        # 依次遍历各个 param group
+        # Iterate over each param group
         for group in self.param_groups:
             lr = group['lr']
             beta = group['beta']
@@ -118,27 +118,27 @@ class TJU_v1(Optimizer):
             wd_coef = group['weight_decay']
             wd_type = group['weight_decay_type']
 
-            # 遍历本组中的参数
+            # Iterate over parameters in this group
             for p in group['params']:
                 if p.grad is None:
                     continue
 
-                # 取当前参数的 state 字典
+                # Get the state dictionary for the current parameter
                 state = self.state[p]
 
-                # 初始化 state
+                # Initialize state
                 if len(state) == 0:
                     state['step'] = 0
-                    # 一阶梯度的指数滑动平均
+                    # Exponential moving average of first-order gradients
                     state['exp_avg_grad'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 近似 Hessian 的指数滑动平均
+                    # Exponential moving average of approximate Hessian
                     state['approx_hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 上一次更新方向
+                    # Previous update direction
                     state['prev_update'] = torch.zeros_like(p, memory_format=torch.preserve_format)
 
                 step_count = state['step']
                 if step_count < warmup_steps:
-                    # 线性从 init_lr → base_lr
+                    # Linearly ramp from init_lr to base_lr
                     current_lr = (base_lr - init_lr) * (step_count / warmup_steps) + init_lr
                 else:
                     current_lr = lr
@@ -150,7 +150,7 @@ class TJU_v1(Optimizer):
                 if grad.is_sparse:
                     raise RuntimeError("TJU_v3 does not support sparse gradients.")
 
-                # 如果是 L2 衰减，直接将衰减项加到梯度
+                # If L2 decay, add the decay term directly to the gradient
                 if wd_coef != 0 and wd_type == 'L2':
                     grad = grad.add(p, alpha=wd_coef)
 
@@ -161,36 +161,36 @@ class TJU_v1(Optimizer):
                 bias_corr = 1 - (beta ** step_count)  
                 effective_alpha = (1 - beta) / bias_corr
 
-                # 计算梯度差
+                # Compute gradient difference
                 grad_diff = grad - exp_avg_grad
 
-                # 根据 rebound 模式选择阈值
+                # Select threshold based on rebound mode
                 if rebound_mode == 'belief':
                     rebound_thresh = grad_diff.norm(p=np.inf)
                 else:
                     rebound_thresh = 0.01
-                    eps = eps / max(rebound_thresh, 1e-8)  # 防止除以 0
+                    eps = eps / max(rebound_thresh, 1e-8)  # Prevent division by zero
 
-                # (1) 更新一阶梯度平均: exp_avg_grad ← exp_avg_grad + effective_alpha * grad_diff
+                # (1) Update first-order gradient EMA: exp_avg_grad ← exp_avg_grad + effective_alpha * grad_diff
                 exp_avg_grad.add_(grad_diff, alpha=effective_alpha)
 
-                # (2) 归一化上一次更新，用于计算近似 Hessian 的更新
+                # (2) Normalize the previous update, used to compute the approximate Hessian update
                 prev_update_norm = prev_update.norm(p=4).add(eps)
                 prev_update.div_(prev_update_norm)
                 prev_update_sq = prev_update.mul(prev_update)
 
-                # 计算 delta，用于更新 Hessian
-                # grad_diff / prev_update_norm 与 prev_update 做内积
+                # Compute delta for updating the Hessian
+                # dot product of grad_diff / prev_update_norm with prev_update
                 delta_term = (grad_diff.div_(prev_update_norm)
                                        .mul_(prev_update)
                                        .sum()
                                        .mul_(-effective_alpha)
                               ) - approx_hessian.mul(prev_update_sq).sum()
 
-                # (3) 更新 Hessian: approx_hessian ← approx_hessian + (delta_term * prev_update_sq)
+                # (3) Update Hessian: approx_hessian ← approx_hessian + (delta_term * prev_update_sq)
                 approx_hessian.addcmul_(prev_update_sq, delta_term)
 
-                # (4) 计算新的更新方向 new_update
+                # (4) Compute new update direction new_update
                 if rebound_mode == 'belief':
                     denom_h = torch.max(approx_hessian.abs(), rebound_thresh)
                     denom_h.add_(eps / effective_alpha)
@@ -199,7 +199,7 @@ class TJU_v1(Optimizer):
 
                 new_update = exp_avg_grad.div(denom_h)
 
-                # (5) 如果需要 decoupled 或 stable wd
+                # (5) Apply decoupled or stable weight decay if needed
                 if wd_coef != 0 and wd_type != 'L2':
                     if wd_type == 'stable':
                         scaled_decay = wd_coef / max(denom_h.mean().item(), 1e-8)
@@ -208,10 +208,10 @@ class TJU_v1(Optimizer):
                         # decoupled
                         new_update.add_(p, alpha=wd_coef)
 
-                # (6) 更新参数
+                # (6) Update parameters
                 p.add_(new_update, alpha=-current_lr)
 
-                # 存放本次的更新向量，供下次计算使用
+                # Store the current update vector for use in the next step
                 prev_update.copy_(new_update)
 
         return loss

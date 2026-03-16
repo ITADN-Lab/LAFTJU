@@ -9,7 +9,7 @@ from cutout import Cutout
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # number of subprocesses to use for data loading
 num_workers = 0
-# 每批加载图数量
+# number of images to load per batch
 batch_size = 16
 # percentage of training set to use as validation
 valid_size = 0.2
@@ -22,10 +22,10 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0,pic_path='dataset'):
     pic_path: The path of the pictrues
     """
     transform_train = transforms.Compose([
-    #   transforms.RandomCrop(32, padding=4),  #先四周填充0，在把图像随机裁剪成32*32
-        transforms.RandomHorizontalFlip(),  #图像一半的概率翻转，一半的概率不翻转
+    #   transforms.RandomCrop(32, padding=4),  # pad 0 on all sides first, then randomly crop image to 32x32
+        transforms.RandomHorizontalFlip(),  # flip image with 50% probability
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]), #R,G,B每层的归一化用到的均值和方差
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]), # mean and std used for normalization of each R, G, B channel
         Cutout(n_holes=1, length=16),
     ])
 
@@ -35,7 +35,7 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0,pic_path='dataset'):
     ])
 
 
-    # 将数据转换为torch.FloatTensor，并标准化。
+    # Convert data to torch.FloatTensor and normalize.
     train_data = datasets.CIFAR10(pic_path, train=True,
                                 download=True, transform=transform_train)
     valid_data = datasets.CIFAR10(pic_path, train=True,
@@ -55,7 +55,7 @@ def read_dataset(batch_size=16,valid_size=0.2,num_workers=0,pic_path='dataset'):
     train_idx, valid_idx = indices[split:], indices[:split]
 
     # define samplers for obtaining training and validation batches
-    # 无放回地按照给定的索引列表采样样本元素
+    # Sample elements without replacement according to the given index list
     train_sampler = SubsetRandomSampler(train_idx)
     valid_sampler = SubsetRandomSampler(valid_idx)
 

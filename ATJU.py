@@ -60,7 +60,7 @@ class ATJU(Optimizer):
         self.epoch_now = epoch_now
         self.total_epoch = total_epoch
         self.step_now = 0
-        # -- 参数合法性检查 --
+        # -- Parameter validity checks --
         if not 0.0 < tju_lr:
             raise ValueError(f"Invalid learning rate value: {tju_lr}")
         if not 0.0 < a_lr:
@@ -88,19 +88,19 @@ class ATJU(Optimizer):
         if not 0.0 <= momentum:
             raise ValueError(f"Invalid momentum value: {momentum}")
 
-        # 若未给出 init_lr，则默认 init_lr = tju_lr / 1000
+        # If init_lr is not provided, default to init_lr = tju_lr / 1000
         if init_lr is None:
             init_lr = tju_lr / 1000
         if not 0.0 <= init_lr <= tju_lr:
             raise ValueError(f"Invalid init_lr: {init_lr} (must be in [0, tju_lr])")
 
-        # 权重衰减系数与方式
+        # Weight decay coefficient and type
         if tju_weight_decay < 0.0:
             raise ValueError(f"Invalid tju_weight_decay: {tju_weight_decay} (must be >= 0)")
         if a_weight_decay < 0.0:
             raise ValueError(f"Invalid a_weight_decay: {a_weight_decay} (must be >= 0)")
         if weight_decay_type is None:
-            # 如果 rebound='constant' 则缺省用 L2，否则用 decoupled
+            # If rebound='constant', default to L2; otherwise use decoupled
             weight_decay_type = 'L2' if rebound == 'constant' else 'decoupled'
         if weight_decay_type not in ['L2', 'decoupled', 'stable']:
             raise ValueError(f"Invalid weight_decay_type: {weight_decay_type} "
@@ -109,7 +109,7 @@ class ATJU(Optimizer):
             raise ValueError(f"Invalid A_optim: {A_optim} "
                              "(must be 'SGD', 'Adam', or 'AdamW')")
 
-        # 使用字典统一存储默认超参数
+        # Store all default hyperparameters in a dictionary
         defaults = dict(
             tju_lr=tju_lr,
             a_lr=a_lr,
@@ -129,7 +129,7 @@ class ATJU(Optimizer):
             weight_decay_type=weight_decay_type,
             A_optim=A_optim,
         )
-        # ATJU 继承父类的所有属性，分别对应父类 params, defaults
+        # ATJU inherits all attributes from the parent class, corresponding to parent params and defaults
         super(ATJU, self).__init__(params, defaults)
 
     def __setstate__(self, state):
@@ -152,7 +152,7 @@ class ATJU(Optimizer):
             with torch.enable_grad():
                 loss = closure()
 
-        # 依次遍历各个 param group
+        # Iterate over each param group
         for group in self.param_groups:
             tju_lr = group['tju_lr']
             a_lr = group["a_lr"]
@@ -172,7 +172,7 @@ class ATJU(Optimizer):
             wd_type = group['weight_decay_type']
             A_optim = group['A_optim']
 
-            # 定义当前的权重值 s
+            # Define the current weight value s
             if self.epoch_now == 1:
                 self.total_epoch = self.total_epoch * (self.step_now + 1)
                 self.epoch_now += 1
@@ -183,33 +183,33 @@ class ATJU(Optimizer):
             else:
                 s = 0
 
-            # 遍历本组中的参数
+            # Iterate over parameters in this group
             for p in group['params']:
                 if p.grad is None:
                     continue
 
-                # 取当前参数的 state 字典
+                # Get the state dictionary for the current parameter
                 state = self.state[p]
 
-                # 初始化 state
+                # Initialize state
                 if len(state) == 0:
                     state['step'] = 0
-                    # sgd历史动量值
+                    # SGD historical momentum value
                     state["momentum_buffer"] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 一阶梯度的指数滑动平均(TJU)
+                    # Exponential moving average of first-order gradients (TJU)
                     state['exp_avg_grad'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 一阶梯度的指数滑动平均（Adam/W）
+                    # Exponential moving average of first-order gradients (Adam/W)
                     state['exp_avg_grad_A'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 二阶梯度的指数滑动平均(AdamW)
+                    # Exponential moving average of second-order gradients (AdamW)
                     state["exp_avg_sq_grad_A"] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 近似 Hessian 的指数滑动平均
+                    # Exponential moving average of approximate Hessian
                     state['approx_hessian'] = torch.zeros_like(p, memory_format=torch.preserve_format)
-                    # 上一次更新方向
+                    # Previous update direction
                     state['prev_update'] = torch.zeros_like(p, memory_format=torch.preserve_format)
 
                 step_count = state['step']
                 if step_count < warmup_steps:
-                    # 线性从 init_lr → base_lr
+                    # Linear ramp from init_lr to base_lr
                     current_lr = (base_lr - init_lr) * (step_count / warmup_steps) + init_lr
                 else:
                     current_lr = tju_lr
@@ -218,15 +218,15 @@ class ATJU(Optimizer):
                 state['step'] = step_count
                 self.step_now = step_count
 
-                grad = p.grad  # 原始梯度值
-                grad_TJU = p.grad  # TJU使用的梯度值
-                grad_A = p.grad  # A_optim使用的梯度值
+                grad = p.grad  # raw gradient value
+                grad_TJU = p.grad  # gradient used by TJU
+                grad_A = p.grad  # gradient used by A_optim
 
                 if grad.is_sparse:
                     raise RuntimeError("ATJU does not support sparse gradients.")
 
-                #   TJU更新部分
-                # 如果是 L2 衰减，直接将衰减项加到梯度
+                #   TJU update section
+                # If L2 decay, add the decay term directly to the gradient
                 if wd_coef != 0 and wd_type == 'L2':
                     grad_TJU = grad_TJU.add(p, alpha=wd_coef)
 
@@ -240,71 +240,71 @@ class ATJU(Optimizer):
                 bias_corr = 1 - (tju_beta1 ** step_count)
                 effective_alpha = (1 - tju_beta1) / bias_corr
 
-                # 计算梯度差
-                grad_diff = grad_TJU - exp_avg_grad  # 当前 参数梯度 减去 过往 存储梯度
+                # Compute gradient difference
+                grad_diff = grad_TJU - exp_avg_grad  # current parameter gradient minus stored historical gradient
 
-                # 根据 rebound 模式选择阈值
+                # Select threshold based on rebound mode
                 if rebound_mode == 'belief':
-                    rebound_thresh = grad_diff.norm(p=np.inf)  # 根据当前梯度差（grad_diff） 的最大绝对值 动态设定阈值
+                    rebound_thresh = grad_diff.norm(p=np.inf)  # dynamically set threshold based on max absolute value of current gradient difference (grad_diff)
                 else:
                     rebound_thresh = 0.01
-                    tju_eps = tju_eps / max(rebound_thresh, 1e-8)  # 防止除以 0
+                    tju_eps = tju_eps / max(rebound_thresh, 1e-8)  # prevent division by zero
 
-                # (1) 更新一阶梯度平均: exp_avg_grad ← exp_avg_grad + effective_alpha * grad_diff
+                # (1) Update first-order gradient mean: exp_avg_grad ← exp_avg_grad + effective_alpha * grad_diff
                 exp_avg_grad.add_(grad_diff, alpha=effective_alpha)
 
-                # (2) 归一化上一次更新，用于计算近似 Hessian 的更新
-                prev_update_norm = prev_update.norm(p=4).add(tju_eps)  # 计算L4范数，并加上eps防止分母为0
-                prev_update.div_(prev_update_norm)  # 对原 prev_update 依据L4范数进行归一化
-                prev_update_sq = prev_update.mul(prev_update)  # 计算上述归一化后的 prev_update 每个项的平方值
+                # (2) Normalize the previous update, used to compute the approximate Hessian update
+                prev_update_norm = prev_update.norm(p=4).add(tju_eps)  # compute L4 norm and add eps to prevent zero denominator
+                prev_update.div_(prev_update_norm)  # normalize prev_update by its L4 norm
+                prev_update_sq = prev_update.mul(prev_update)  # compute element-wise square of the normalized prev_update
 
-                # 计算 delta，用于更新 Hessian
-                # grad_diff / prev_update_norm 与 prev_update 做内积
-                delta_term = (grad_diff.div_(prev_update_norm)  # 将 grad_diff 归一化
-                              .mul_(prev_update)  # 计算归一化后的 梯度差grad_diff 与 历史更新量prev_update 的点积
-                              .sum()  # 对所有参数维度求和，得到标量值
-                              .mul_(-effective_alpha)  # 将结果 乘以 负的有效学习率 effective_alpha
+                # Compute delta for updating the Hessian
+                # dot product of grad_diff / prev_update_norm with prev_update
+                delta_term = (grad_diff.div_(prev_update_norm)  # normalize grad_diff
+                              .mul_(prev_update)  # compute dot product of normalized grad_diff with historical update prev_update
+                              .sum()  # sum over all parameter dimensions to get a scalar
+                              .mul_(-effective_alpha)  # multiply result by negative effective learning rate effective_alpha
                               ) - approx_hessian.mul(
-                    prev_update_sq).sum()  # 将近似的 Hessian矩阵 approx_hessian 与历史更新量的平方 prev_update_sq 相乘后求和
-                # 二者作差得 delta_term
+                    prev_update_sq).sum()  # multiply approximate Hessian approx_hessian by squared historical update prev_update_sq and sum
+                # subtract the two terms to get delta_term
 
-                # (3) 更新 Hessian: approx_hessian ← approx_hessian + (delta_term * prev_update_sq)
+                # (3) Update Hessian: approx_hessian ← approx_hessian + (delta_term * prev_update_sq)
                 approx_hessian.addcmul_(prev_update_sq, delta_term)
 
-                # (4) 计算新的更新方向 new_update
+                # (4) Compute new update direction new_update
                 if rebound_mode == 'belief':
                     denom_h = torch.max(approx_hessian.abs(),
-                                        rebound_thresh)  # 取 approx_hessian 的绝对值与 rebound_thresh 的逐元素最大值
-                    denom_h.add_(tju_eps / effective_alpha)  # 防止除0
+                                        rebound_thresh)  # element-wise maximum of absolute value of approx_hessian and rebound_thresh
+                    denom_h.add_(tju_eps / effective_alpha)  # prevent division by zero
                 else:
                     denom_h = approx_hessian.abs().clamp_(
-                        min=rebound_thresh)  # 取 approx_hessian 的绝对值，将小于 rebound_thresh 的值截断为 rebound_thresh
+                        min=rebound_thresh)  # take absolute value of approx_hessian, clamp values below rebound_thresh to rebound_thresh
 
-                new_update = exp_avg_grad.div(denom_h)  # 将历史梯度动量 exp_avg_grad 按曲率倒数缩放，得到最终更新方向
+                new_update = exp_avg_grad.div(denom_h)  # scale historical gradient momentum exp_avg_grad by inverse curvature to get final update direction
 
-                # (5) 如果需要 decoupled 或 stable wd
-                if wd_coef != 0 and wd_type != 'L2':  # 如果权重衰退不为0， 且方式不为L2正则化
+                # (5) Apply decoupled or stable weight decay if needed
+                if wd_coef != 0 and wd_type != 'L2':  # if weight decay is non-zero and type is not L2 regularization
                     if wd_type == 'stable':
-                        scaled_decay = wd_coef / max(denom_h.mean().item(), 1e-8)  # 计算 denom_h 的均值（反映参数曲率）。
-                        # 用 wd_coef 除以该均值，得到缩放后的衰减因子 scaled_decay。
-                        new_update.add_(p, alpha=scaled_decay)  # 将缩放后的衰减因子作用于参数 p，更新方向 new_update
+                        scaled_decay = wd_coef / max(denom_h.mean().item(), 1e-8)  # compute mean of denom_h (reflects parameter curvature).
+                        # divide wd_coef by this mean to get scaled decay factor scaled_decay.
+                        new_update.add_(p, alpha=scaled_decay)  # apply scaled decay factor to parameter p, updating direction new_update
                     else:
                         # decoupled
-                        new_update.add_(p, alpha=wd_coef)  # 直接应用固定权重的衰减（与梯度无关）
+                        new_update.add_(p, alpha=wd_coef)  # apply fixed weight decay directly (independent of gradient)
 
-                # (6) 计算参数更新值(TJU)
+                # (6) Compute parameter update value (TJU)
                 updata_TJU = (1 - s) * new_update
 
                 if A_optim == 'SGD':
-                    # SGD 更新部分
+                    # SGD update section
                     grad_A = grad_A.add(p, alpha=a_wd_coef)
-                    # 计算参数更新值（sgd）
+                    # Compute parameter update value (SGD)
                     updata_A = s * (grad_A + momentum * momentum_buffer)
-                    # 存储动量累计值
+                    # Store accumulated momentum value
                     state["momentum_buffer"] = grad_A + momentum * momentum_buffer
 
                 elif A_optim == 'Adam':
-                    # Adam更新部分
+                    # Adam update section
                     grad_A = grad_A.add(p, alpha=a_wd_coef)
                     exp_avg_grad_A = a_beta1 * exp_avg_grad_A + (1 - a_beta1) * grad_A
                     exp_avg_sq_grad_A = a_beta2 * exp_avg_sq_grad_A + (1 - a_beta2) * grad_A ** 2
@@ -317,7 +317,7 @@ class ATJU(Optimizer):
                     state["exp_avg_sq_grad_A"] = exp_avg_sq_grad_A
 
                 elif A_optim == 'AdamW':
-                    # AdamW 更新部分
+                    # AdamW update section
                     exp_avg_grad_A = a_beta1 * exp_avg_grad_A + (1 - a_beta1) * grad_A
                     exp_avg_sq_grad_A = a_beta2 * exp_avg_sq_grad_A + (1 - a_beta2) * grad_A ** 2
 
@@ -329,10 +329,10 @@ class ATJU(Optimizer):
                     state["exp_avg_sq_grad_A"] = exp_avg_sq_grad_A
 
                 new_update = -current_lr * updata_TJU - a_lr * updata_A
-                p.add_(new_update)  # 进行梯度更新，new_update控制更新方向
+                p.add_(new_update)  # apply gradient update, new_update controls the update direction
 
-                # 存放本次的更新向量，供下次计算使用
-                prev_update.copy_(new_update)  # 将当前更新量 new_update 保存到 prev_update 中，供下次迭代使用
+                # Store the current update vector for use in the next iteration
+                prev_update.copy_(new_update)  # save current update new_update to prev_update for use in next iteration
 
-        print(f'当前s值为： {s}')
+        print(f'Current s value: {s}')
         return loss

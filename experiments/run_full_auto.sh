@@ -74,7 +74,7 @@ print(f'{ep}|{d[\"best_valid_acc\"]:.2f}|{d[\"best_test_acc\"]:.2f}')
         local ep=$(echo "$info" | cut -d'|' -f1)
         local va=$(echo "$info" | cut -d'|' -f2)
         local ta=$(echo "$info" | cut -d'|' -f3)
-        feishu "✅ $tag 完成" "green" "**Epochs**: ${ep}\\n**Best Valid Acc**: ${va}%\\n**Best Test Acc**: ${ta}%"
+        feishu "✅ $tag done" "green" "**Epochs**: ${ep}\\n**Best Valid Acc**: ${va}%\\n**Best Test Acc**: ${ta}%"
     fi
 }
 
@@ -134,9 +134,9 @@ for ds in ['cifar10','cifar100']:
             else:
                 lines.append(f'  {opt}: {vals[0]:.2f}% (1 seed)')
 print('\\\\n'.join(lines))
-" 2>/dev/null || echo "结果生成失败")
+" 2>/dev/null || echo "Failed to generate results")
 
-feishu "🎉 全部实验完成" "purple" "$SUMMARY"
+feishu "🎉 All experiments complete" "purple" "$SUMMARY"
 
 log "============================================"
 log "ALL EXPERIMENTS COMPLETE"
