@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.idea/
+experiments/dataset/
+experiments/results/*.json
+experiments/results/*.txt
+experiments/results/*.png
+experiments/results/*.pdf
+*.egg-info/
+.DS_Store
