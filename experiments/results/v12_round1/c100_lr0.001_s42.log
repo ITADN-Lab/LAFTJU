@@ -1,0 +1,41 @@
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU_V12
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_V12_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+  [V12 diag] s=0.040 kf_str=1.000 tju_norm=2.3766 adam_norm=51.5383 kf_active=21/62 gc=21
+Epoch   1/50 | Train Loss: 4.1732 | Valid Acc: 13.76% | Test Acc: 0.00% | LR: 0.001000 s=0.040 | Time: 182.7s
+  [V12 diag] s=0.197 kf_str=1.000 tju_norm=3.7099 adam_norm=54.3325 kf_active=21/62 gc=21
+Epoch   5/50 | Train Loss: 3.8245 | Valid Acc: 19.12% | Test Acc: 0.00% | LR: 0.000984 s=0.197 | Time: 190.2s
+  [V12 diag] s=0.380 kf_str=1.000 tju_norm=4.2527 adam_norm=42.6787 kf_active=21/62 gc=21
+Epoch  10/50 | Train Loss: 3.8125 | Valid Acc: 16.84% | Test Acc: 16.84% | LR: 0.000922 s=0.380 | Time: 193.2s
+  [V12 diag] s=0.537 kf_str=1.000 tju_norm=4.5376 adam_norm=46.1887 kf_active=21/62 gc=21
+Epoch  15/50 | Train Loss: 3.5742 | Valid Acc: 25.74% | Test Acc: 16.84% | LR: 0.000819 s=0.537 | Time: 190.6s
+  [V12 diag] s=0.664 kf_str=1.000 tju_norm=5.0766 adam_norm=46.8660 kf_active=21/62 gc=21
+Epoch  20/50 | Train Loss: 3.2426 | Valid Acc: 32.72% | Test Acc: 33.01% | LR: 0.000684 s=0.664 | Time: 192.0s
+  [V12 diag] s=0.762 kf_str=1.000 tju_norm=5.4037 adam_norm=48.4157 kf_active=21/62 gc=21
+Epoch  25/50 | Train Loss: 2.9042 | Valid Acc: 41.40% | Test Acc: 40.57% | LR: 0.000532 s=0.762 | Time: 192.1s
+  [V12 diag] s=0.834 kf_str=1.000 tju_norm=5.7095 adam_norm=47.1204 kf_active=21/62 gc=21
+Epoch  30/50 | Train Loss: 2.6581 | Valid Acc: 45.92% | Test Acc: 46.35% | LR: 0.000376 s=0.834 | Time: 192.1s
+  [V12 diag] s=0.885 kf_str=1.000 tju_norm=6.3456 adam_norm=47.4488 kf_active=21/62 gc=21
+Epoch  35/50 | Train Loss: 2.4961 | Valid Acc: 49.74% | Test Acc: 46.35% | LR: 0.000233 s=0.885 | Time: 190.2s
+  [V12 diag] s=0.922 kf_str=1.000 tju_norm=7.0884 adam_norm=58.1696 kf_active=21/62 gc=21
+Epoch  40/50 | Train Loss: 2.3792 | Valid Acc: 51.18% | Test Acc: 51.88% | LR: 0.000116 s=0.922 | Time: 192.1s
+  [V12 diag] s=0.947 kf_str=1.000 tju_norm=6.7378 adam_norm=48.2806 kf_active=21/62 gc=21
+Epoch  45/50 | Train Loss: 2.3191 | Valid Acc: 52.40% | Test Acc: 51.88% | LR: 0.000036 s=0.947 | Time: 189.9s
+  [V12 diag] s=0.964 kf_str=1.000 tju_norm=6.4190 adam_norm=45.4813 kf_active=21/62 gc=21
+Epoch  50/50 | Train Loss: 2.2957 | Valid Acc: 53.42% | Test Acc: 52.85% | LR: 0.000002 s=0.964 | Time: 190.9s
+Results saved to ./results/v12_round1/cifar100_resnet18_LAKTJU_V12_seed42_20260321_224031.json
+Results saved to ./results/v12_round1/cifar100_resnet18_LAKTJU_V12_seed42_20260321_224031.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_V12_seed42
+Best Valid Acc: 53.42%
+Best Test Acc:  52.85%
+Avg Time/Epoch: 190.3s
+============================================================
