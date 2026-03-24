@@ -2,6 +2,22 @@
 
 Official PyTorch implementation of **LAFTJU**, a novel deep learning optimizer that unifies curvature-aware trajectory optimization with adaptive gradient methods through Kronecker-factored preconditioning and homotopy-based blending.
 
+## Introduction
+
+Deep neural network optimization remains a central challenge in machine learning. First-order methods such as SGD with momentum and Adam dominate practice due to their simplicity, while second-order methods (e.g., K-FAC, natural gradient) offer faster convergence but at prohibitive computational cost. Recent adaptive optimizers like AdamW and Adan attempt to bridge this gap, yet they still ignore curvature information and lack principled mechanisms for blending different optimization strategies.
+
+**LAFTJU** addresses these limitations through a novel dual-path optimization framework:
+
+- **Problem 1: Curvature blindness.** Pure first-order methods ignore the loss landscape geometry, leading to slow convergence in ill-conditioned regions. LAFTJU incorporates efficient Kronecker-factored second-order information via the TJU path.
+- **Problem 2: Prohibitive cost of second-order methods.** Full Hessian computation costs $O(n^2)$ in memory and $O(n^3)$ in time. LAFTJU's KF-PTC reduces this to $O(d_{\text{in}}^2 + d_{\text{out}}^2)$ per layer using Kronecker factorization.
+- **Problem 3: No principled blending.** Existing hybrid methods use ad-hoc switching rules. LAFTJU employs a tanh-based homotopy schedule grounded in numerical continuation methods, providing smooth and controllable transition from curvature-aware exploration to adaptive exploitation.
+
+**Contributions:**
+1. A **dual-path optimization framework** combining curvature-aware trajectory optimization (TJU) with AdamW through principled homotopy blending
+2. An efficient **Kronecker-factored preconditioning** (KF-PTC) scheme with < 10% computational overhead
+3. A **tanh-based homotopy scheduler** for smooth exploration-to-exploitation transition
+4. Comprehensive evaluation achieving **95.82%** on CIFAR-10 (surpassing Adam, AdamW, Adan) and **76.08%** on CIFAR-100
+
 ## Key Results
 
 **CIFAR-10 with ResNet-18: LAFTJU achieves 95.82%, surpassing Adam, AdamW, and Adan.**
@@ -9,6 +25,110 @@ Official PyTorch implementation of **LAFTJU**, a novel deep learning optimizer t
 ![CIFAR-10 Optimizer Comparison](paper/figures/fig1_cifar10_comparison.png)
 
 ![Training Curves](paper/figures/fig2_training_curves.png)
+
+## Theoretical Foundation
+
+### Quotient Gradient System (QGS) Framework
+
+LAFTJU builds on the TJU optimizer family, which models DNN parameter updates as trajectories of a nonlinear dynamical system. The core idea is the **Quotient Gradient System (QGS)**:
+
+$$\dot{\theta} = -\frac{\nabla L(\theta)}{H(\theta)}$$
+
+where $H(\theta)$ approximates the local curvature (Hessian diagonal or Kronecker-factored inverse). Unlike standard first-order methods that treat all parameters uniformly, QGS normalizes gradients by curvature, enabling faster traversal of ill-conditioned loss landscapes. This formulation has deep connections to natural gradient descent and mirror descent.
+
+### TJU Path: Curvature-Aware Trajectory Optimization
+
+The TJU path maintains bias-corrected exponential moving averages of the gradient with L2 weight decay folded in:
+
+$$\mathbf{m}_t = \beta_1 \mathbf{m}_{t-1} + (1-\beta_1)(\nabla \mathcal{L}_t + \lambda\theta_t)$$
+
+$$\hat{\mathbf{m}}_t = \mathbf{m}_t \;/\; (1 - \beta_1^t)$$
+
+For **Conv2d and Linear layers**, the update is preconditioned by Kronecker factors:
+
+$$\mathbf{u}_t^{\text{TJU}} = \mathbf{P}_t^{-1} \hat{\mathbf{m}}_t$$
+
+For **1D parameters** (BatchNorm, biases), a diagonal Hessian approximation serves as fallback:
+
+$$\mathbf{u}_t^{\text{TJU}} = \hat{\mathbf{m}}_t \;/\; |\mathbf{H}_t^{\text{diag}}|$$
+
+### AdamW Path
+
+The AdamW path follows the standard formulation with bias-corrected first and second moment estimates:
+
+$$\mathbf{m}_t^a = \beta_1 \mathbf{m}_{t-1}^a + (1-\beta_1) \nabla \mathcal{L}_t, \quad \mathbf{v}_t^a = \beta_2 \mathbf{v}_{t-1}^a + (1-\beta_2)(\nabla \mathcal{L}_t)^2$$
+
+$$\mathbf{u}_t^{\text{AdamW}} = \frac{\hat{\mathbf{m}}_t^a}{\sqrt{\hat{\mathbf{v}}_t^a} + \epsilon}$$
+
+### Kronecker-Factored Preconditioning (KF-PTC)
+
+For a layer with weight matrix $W \in \mathbb{R}^{m \times n}$, the Fisher information matrix $F$ is approximated via Kronecker factorization:
+
+$$F \approx A \otimes G$$
+
+where:
+- $A = \mathbb{E}[\mathbf{a}\mathbf{a}^\top] \in \mathbb{R}^{n \times n}$ — input activation covariance
+- $G = \mathbb{E}[\mathbf{g}\mathbf{g}^\top] \in \mathbb{R}^{m \times m}$ — output gradient covariance
+
+The preconditioned gradient is computed as:
+
+$$\widetilde{\nabla}_W = (A + \delta I)^{-1} \; \nabla_W \; (G + \delta I)^{-1}$$
+
+where $\delta$ is a damping factor for numerical stability. Kronecker factors are updated every $T_{\text{kf}}$ steps using exponential moving averages ($\rho = 0.95$):
+
+$$A_t = \rho A_{t-1} + (1-\rho) \mathbf{a}_t \mathbf{a}_t^\top, \quad G_t = \rho G_{t-1} + (1-\rho) \mathbf{g}_t \mathbf{g}_t^\top$$
+
+For convolutional layers, input activations are unfolded into 2D matrices before computing covariance. Forward and backward hooks are registered automatically via `optimizer.register_hooks(model)`.
+
+**Complexity:** Full Fisher costs $O(d_{\text{in}}^2 \cdot d_{\text{out}}^2)$ per layer. KF-PTC reduces this to $O(d_{\text{in}}^2 + d_{\text{out}}^2)$, with < 5% additional memory and < 10% computation overhead for ResNet-18.
+
+### Homotopy Blending
+
+The homotopy parameter $s_t$ controls the blend between TJU and AdamW paths:
+
+$$s_t = \tanh\!\left(\frac{t}{T} \cdot \eta\right)$$
+
+The final parameter update is:
+
+$$\Delta \theta_t = -(1-s_t) \cdot \alpha_{\text{tju}} \cdot \mathbf{u}_t^{\text{TJU}} - s_t \cdot \alpha_{\text{a}} \cdot (\mathbf{u}_t^{\text{AdamW}} + \lambda \theta_t)$$
+
+| Phase | $s_t$ | Behavior |
+|:---:|:---:|---|
+| Early ($t \ll T$) | $\approx 0$ | TJU dominates — curvature-aware exploration |
+| Mid ($t \sim T/2$) | $\sim 0.5$–$1.0$ | Smooth transition |
+| Late ($t \to T$) | $\approx 1$ | AdamW dominates — fine-grained exploitation |
+
+The homotopy speed $\eta$ must scale with training duration: $\eta = 5.0$ for 200 epochs, $\eta = 8.0$ for 300 epochs. Both learning rates follow independent cosine annealing schedules with linear warmup.
+
+### Algorithm
+
+```
+Input: θ₀, α_tju, α_a, η, λ, warmup W, KF interval T_kf, damping δ
+For t = 1 to T:
+    g_t = ∇L(θ_{t-1})
+
+    # Warmup
+    if t ≤ W: scale both learning rates by t/W
+
+    # Homotopy
+    s_t = tanh(t/T · η)
+
+    # TJU path (curvature-preconditioned)
+    g_tju = g_t + λ·θ_{t-1}                          # L2 folded
+    m̂_t = BiasCorrect(EMA(g_tju))
+    if KF available:  u_tju = KF_Precondition(m̂_t)
+    else:              u_tju = m̂_t / |H_diag|
+
+    # AdamW path
+    u_adamw = Adam_Update(g_t)
+
+    # Blend
+    Δθ = (1-s_t)·α_tju·u_tju + s_t·α_a·(u_adamw + λ·θ_{t-1})
+    θ_t = θ_{t-1} - Δθ
+
+    # Update KF factors every T_kf steps
+    if t mod T_kf = 0: recompute A⁻¹, G⁻¹
+```
 
 ## Method
 
