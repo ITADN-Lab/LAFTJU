@@ -6,6 +6,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 import torchvision, torchvision.transforms as transforms
 from LAKTJU import LAKTJU
+from LAKTJU_Fast import LAKTJU_Fast
 from adan import Adan
 from ResNet import ResNet18
 from cutout import Cutout
@@ -33,6 +34,9 @@ def make_optimizer(name, model):
         return torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=5e-4)
     elif name == 'Adan':
         return Adan(model.parameters(), lr=1e-2, weight_decay=5e-4)
+    elif name == 'LAFTJU_Fast':
+        return LAKTJU_Fast(model.parameters(), tju_lr=3e-3, a_lr=1e-3, weight_decay=2e-3,
+                      homotopy_speed=8.0, warmup=100)
     elif name == 'LAFTJU':
         return LAKTJU(model.parameters(), tju_lr=3e-3, a_lr=1e-3, weight_decay=2e-3,
                       homotopy_speed=8.0, warmup=100)
@@ -42,6 +46,9 @@ def benchmark(name, loader):
     torch.manual_seed(42)
     model = ResNet18(num_classes=10).to(DEVICE)
     opt = make_optimizer(name, model)
+    # Register KF hooks for LAKTJU-based optimizers
+    if hasattr(opt, 'register_hooks'):
+        opt.register_hooks(model)
     criterion = nn.CrossEntropyLoss()
 
     if DEVICE == 'cuda':
@@ -85,7 +92,7 @@ def benchmark(name, loader):
 
 def main():
     loader = get_loader()
-    optimizers = ['Adam', 'AdamW', 'Adan', 'LAFTJU']
+    optimizers = ['Adam', 'AdamW', 'Adan', 'LAFTJU', 'LAFTJU_Fast']
     results = {}
     for name in optimizers:
         print(f'Benchmarking {name}...', flush=True)

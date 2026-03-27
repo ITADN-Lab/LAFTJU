@@ -407,25 +407,28 @@ Extending training from 200 to 300 epochs provides marginal gains when $\eta$ is
 
 \textbf{Scalability considerations.}
 
-Table~\ref{tab:speed_memory} reports per-step time and peak GPU memory for each optimizer on ResNet-18/CIFAR-10 with batch size 128, averaged over 50 measured batches after 5 warmup batches.
+Table~\ref{tab:speed_memory} reports per-step time and peak memory for each optimizer on ResNet-18/CIFAR-10 with batch size 128, averaged over 50 measured batches after 5 warmup batches. We also report \method{}$^\dagger$ (Fast variant) which skips Kronecker factor accumulation on non-update steps.
 
 \begin{table}[h]
 \centering
-\caption{Computational cost comparison on ResNet-18/CIFAR-10 (batch=128, CPU inference). \method{} overhead versus Adam is due to Kronecker-factor maintenance.}
+\caption{Computational cost comparison on ResNet-18/CIFAR-10 (batch=128, CPU). \method{}$^\dagger$ skips KF hook accumulation on non-update steps.}
 \label{tab:speed_memory}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Optimizer} & \textbf{ms/step} & \textbf{s/epoch} & \textbf{Mem (MB)} & \textbf{Overhead} \\
 \midrule
-Adam    & 3.83 & 1.5 & 242 & baseline \\
-AdamW   & 3.78 & 1.5 & 244 & $\pm$1\% \\
-Adan    & 4.25 & 1.7 & 330 & $+$11\% \\
-\method{} & 11.62 & 4.5 & 431 & $+$203\% \\
+Adam    & 3.64 & 1.4 & 242 & baseline \\
+AdamW   & 3.70 & 1.4 & 244 & $+$2\% \\
+Adan    & 4.03 & 1.6 & 330 & $+$11\% \\
+\method{} & 25.63 & 10.0 & 864 & $+$604\% \\
+\method{}$^\dagger$ & 12.03 & 4.7 & 1535 & $+$231\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\method{} is $3\times$ slower per step than Adam due to: (1) Kronecker factor computation and EMA updates every $T_{\text{kf}}=20$ steps; (2) two matrix inversions $(A+\delta I)^{-1}$ and $(G+\delta I)^{-1}$ per layer per update. The 78\% larger memory footprint versus Adam reflects storing two Kronecker factors per layer. Despite this overhead, the accuracy gains (\textbf{+1.83\%} over Adam) justify the cost in accuracy-critical settings. Future work will explore sparse Kronecker approximations and update-interval tuning to reduce overhead.
+\textbf{Profiling analysis.} Through cProfile instrumentation we identify that 48\% of \method{}'s wall-clock time is consumed by the forward hook's \texttt{im2col} (\texttt{F.unfold}) and covariance accumulation $(a^\top a)$ executed on \emph{every} forward pass across all 21 Conv2d layers, despite Kronecker factor inverses being updated only every $T_{\text{kf}}=20$ steps. The \method{}$^\dagger$ variant addresses this by skipping hook accumulation on non-update steps, achieving a \textbf{2.1$\times$ speedup} (25.63$\to$12.03 ms/step). The increased peak memory in the Fast variant arises from batching covariance computations at update steps.
+
+\textbf{Remaining overhead.} Even after hook optimization, \method{}$^\dagger$ is $3.3\times$ slower than Adam due to: (1) two Cholesky-based matrix solves $(A+\delta I)^{-1}$ and $(G+\delta I)^{-1}$ per layer at update steps; (2) dual-path state maintenance (TJU + AdamW). Despite this cost, the accuracy gains (\textbf{+1.83\%} over Adam on CIFAR-10, \textbf{+1.62\%} on CIFAR-100) justify its use in accuracy-critical training scenarios.
 
 % ============================================================
 % 6. Conclusion
