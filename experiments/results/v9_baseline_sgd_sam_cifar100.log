@@ -1,0 +1,62 @@
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: SGD
+
+============================================================
+Starting training: cifar100_resnet18_SGD_seed42
+============================================================
+
+Epoch   1/200 | Train Loss: 4.1860 | Valid Acc: 11.22% | Test Acc: 0.00% | LR: 0.099994 | Time: 51.0s
+Epoch   5/200 | Train Loss: 3.1121 | Valid Acc: 31.02% | Test Acc: 0.00% | LR: 0.099846 | Time: 50.5s
+Epoch  10/200 | Train Loss: 2.5998 | Valid Acc: 45.96% | Test Acc: 45.04% | LR: 0.099384 | Time: 51.7s
+Epoch  15/200 | Train Loss: 2.4574 | Valid Acc: 49.74% | Test Acc: 45.04% | LR: 0.098619 | Time: 49.7s
+Epoch  20/200 | Train Loss: 2.3907 | Valid Acc: 40.92% | Test Acc: 40.79% | LR: 0.097553 | Time: 52.5s
+Epoch  25/200 | Train Loss: 2.3312 | Valid Acc: 52.08% | Test Acc: 40.79% | LR: 0.096194 | Time: 50.0s
+Epoch  30/200 | Train Loss: 2.3057 | Valid Acc: 50.28% | Test Acc: 50.39% | LR: 0.094550 | Time: 53.0s
+Epoch  35/200 | Train Loss: 2.2836 | Valid Acc: 55.20% | Test Acc: 50.39% | LR: 0.092632 | Time: 50.2s
+Epoch  40/200 | Train Loss: 2.2476 | Valid Acc: 55.28% | Test Acc: 55.41% | LR: 0.090451 | Time: 53.2s
+Epoch  45/200 | Train Loss: 2.2340 | Valid Acc: 54.48% | Test Acc: 55.41% | LR: 0.088020 | Time: 50.1s
+Epoch  50/200 | Train Loss: 2.2060 | Valid Acc: 54.34% | Test Acc: 54.80% | LR: 0.085355 | Time: 52.9s
+Results saved to ./results/cifar100_resnet18_SGD_seed42_20260319_133150.json
+Epoch  55/200 | Train Loss: 2.1802 | Valid Acc: 54.26% | Test Acc: 54.80% | LR: 0.082473 | Time: 50.5s
+Epoch  60/200 | Train Loss: 2.1518 | Valid Acc: 53.54% | Test Acc: 53.32% | LR: 0.079389 | Time: 53.1s
+Epoch  65/200 | Train Loss: 2.1329 | Valid Acc: 53.46% | Test Acc: 53.32% | LR: 0.076125 | Time: 50.1s
+Epoch  70/200 | Train Loss: 2.1001 | Valid Acc: 55.54% | Test Acc: 54.57% | LR: 0.072700 | Time: 53.3s
+Epoch  75/200 | Train Loss: 2.0786 | Valid Acc: 56.28% | Test Acc: 54.57% | LR: 0.069134 | Time: 49.8s
+Epoch  80/200 | Train Loss: 2.0308 | Valid Acc: 57.84% | Test Acc: 56.61% | LR: 0.065451 | Time: 53.5s
+Epoch  85/200 | Train Loss: 2.0098 | Valid Acc: 59.54% | Test Acc: 56.61% | LR: 0.061673 | Time: 50.4s
+Epoch  90/200 | Train Loss: 1.9659 | Valid Acc: 61.88% | Test Acc: 62.33% | LR: 0.057822 | Time: 53.4s
+Epoch  95/200 | Train Loss: 1.9322 | Valid Acc: 62.52% | Test Acc: 62.33% | LR: 0.053923 | Time: 49.5s
+Epoch 100/200 | Train Loss: 1.8950 | Valid Acc: 63.84% | Test Acc: 63.26% | LR: 0.050001 | Time: 52.6s
+Results saved to ./results/cifar100_resnet18_SGD_seed42_20260319_133150.json
+Epoch 105/200 | Train Loss: 1.8510 | Valid Acc: 64.38% | Test Acc: 63.26% | LR: 0.046078 | Time: 50.3s
+Epoch 110/200 | Train Loss: 1.8020 | Valid Acc: 62.12% | Test Acc: 61.37% | LR: 0.042179 | Time: 52.7s
+Epoch 115/200 | Train Loss: 1.7611 | Valid Acc: 66.08% | Test Acc: 61.37% | LR: 0.038328 | Time: 49.9s
+Epoch 120/200 | Train Loss: 1.7012 | Valid Acc: 67.40% | Test Acc: 66.82% | LR: 0.034550 | Time: 53.0s
+Epoch 125/200 | Train Loss: 1.6426 | Valid Acc: 68.42% | Test Acc: 66.82% | LR: 0.030867 | Time: 50.5s
+Epoch 130/200 | Train Loss: 1.5847 | Valid Acc: 69.54% | Test Acc: 69.33% | LR: 0.027301 | Time: 52.6s
+Epoch 135/200 | Train Loss: 1.5255 | Valid Acc: 71.38% | Test Acc: 69.33% | LR: 0.023876 | Time: 49.6s
+Epoch 140/200 | Train Loss: 1.4592 | Valid Acc: 72.00% | Test Acc: 71.79% | LR: 0.020612 | Time: 52.7s
+Epoch 145/200 | Train Loss: 1.3841 | Valid Acc: 72.16% | Test Acc: 71.79% | LR: 0.017528 | Time: 50.4s
+Epoch 150/200 | Train Loss: 1.3064 | Valid Acc: 73.52% | Test Acc: 73.92% | LR: 0.014646 | Time: 52.9s
+Results saved to ./results/cifar100_resnet18_SGD_seed42_20260319_133150.json
+Epoch 155/200 | Train Loss: 1.2401 | Valid Acc: 74.84% | Test Acc: 73.92% | LR: 0.011981 | Time: 50.1s
+Epoch 160/200 | Train Loss: 1.1613 | Valid Acc: 75.86% | Test Acc: 75.31% | LR: 0.009550 | Time: 52.6s
+Epoch 165/200 | Train Loss: 1.0978 | Valid Acc: 76.92% | Test Acc: 75.31% | LR: 0.007369 | Time: 50.0s
+Epoch 170/200 | Train Loss: 1.0323 | Valid Acc: 78.04% | Test Acc: 77.29% | LR: 0.005451 | Time: 52.6s
+Epoch 175/200 | Train Loss: 0.9883 | Valid Acc: 78.80% | Test Acc: 77.29% | LR: 0.003807 | Time: 50.0s
+Epoch 180/200 | Train Loss: 0.9523 | Valid Acc: 79.52% | Test Acc: 78.61% | LR: 0.002448 | Time: 52.6s
+Epoch 185/200 | Train Loss: 0.9274 | Valid Acc: 79.24% | Test Acc: 78.61% | LR: 0.001382 | Time: 50.3s
+Epoch 190/200 | Train Loss: 0.9121 | Valid Acc: 79.60% | Test Acc: 79.21% | LR: 0.000617 | Time: 52.9s
+Epoch 195/200 | Train Loss: 0.9048 | Valid Acc: 79.82% | Test Acc: 79.21% | LR: 0.000155 | Time: 50.4s
+Epoch 200/200 | Train Loss: 0.9002 | Valid Acc: 79.80% | Test Acc: 79.29% | LR: 0.000001 | Time: 30.5s
+Results saved to ./results/cifar100_resnet18_SGD_seed42_20260319_133150.json
+Results saved to ./results/cifar100_resnet18_SGD_seed42_20260319_133150.json
+
+============================================================
+Training complete: cifar100_resnet18_SGD_seed42
+Best Valid Acc: 80.04%
+Best Test Acc:  79.18%
+Avg Time/Epoch: 50.3s
+============================================================

@@ -1,0 +1,30 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed456
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 1.8242 | Valid Acc: 52.96% | Test Acc: 0.00% | LR: 0.003000 s=0.025 | Time: 164.6s
+Epoch   5/200 | Train Loss: 1.0685 | Valid Acc: 79.28% | Test Acc: 0.00% | LR: 0.002997 s=0.124 | Time: 475.7s
+Epoch  10/200 | Train Loss: 0.9286 | Valid Acc: 84.78% | Test Acc: 84.07% | LR: 0.002985 s=0.245 | Time: 488.3s
+Epoch  15/200 | Train Loss: 0.8601 | Valid Acc: 88.26% | Test Acc: 84.07% | LR: 0.002964 s=0.358 | Time: 484.8s
+Epoch  20/200 | Train Loss: 0.8103 | Valid Acc: 88.96% | Test Acc: 88.55% | LR: 0.002934 s=0.462 | Time: 488.0s
+Epoch  25/200 | Train Loss: 0.7742 | Valid Acc: 91.76% | Test Acc: 88.55% | LR: 0.002895 s=0.555 | Time: 481.8s
+Epoch  30/200 | Train Loss: 0.7454 | Valid Acc: 89.94% | Test Acc: 89.59% | LR: 0.002847 s=0.635 | Time: 171.9s
+Traceback (most recent call last):
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 426, in <module>
+    main()
+    ~~~~^^
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 355, in main
+    train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device, epoch, args)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 237, in train_one_epoch
+    optimizer.set_loss(loss.item())
+                       ~~~~~~~~~^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/utils/data/_utils/signal_handling.py", line 73, in handler
+    _error_if_any_worker_fails()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: DataLoader worker (pid 2854442) is killed by signal: Terminated. 

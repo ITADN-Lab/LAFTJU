@@ -33,11 +33,9 @@ def load_json(path):
 
 # Color palette
 COLORS = {
-    'SGD': '#e74c3c',
     'Adam': '#3498db',
     'AdamW': '#2ecc71',
     'Adan': '#9b59b6',
-    'ATJU': '#95a5a6',
     'LAFTJU': '#e67e22',
     'LAFTJU_best': '#d35400',
 }
@@ -47,14 +45,12 @@ COLORS = {
 # ============================================================
 print("Generating Figure 1: CIFAR-10 comparison bar chart...")
 
-optimizers = ['SGD', 'Adam', 'AdamW', 'Adan', 'ATJU', 'LAFTJU']
+optimizers = ['Adam', 'AdamW', 'Adan', 'LAFTJU']
 # Best test acc for each (from our data)
 best_test = {
-    'SGD': [95.82, 95.96, 96.18],  # 3 seeds wd=5e-4
     'Adam': [93.61, 94.09, 94.27],
     'AdamW': [94.61, 94.52, 94.52],
     'Adan': [94.28, 94.46, 94.52],
-    'ATJU': [93.43, 93.16, 92.92],
     'LAFTJU': [95.82, 95.78, 95.73],  # best from sprint + R3
 }
 
@@ -73,8 +69,6 @@ for bar, mean in zip(bars, means):
 ax.set_ylabel('Test Accuracy (%)')
 ax.set_title('CIFAR-10 with ResNet-18: Optimizer Comparison')
 ax.set_ylim(91, 97.5)
-ax.axhline(y=95.99, color='red', linestyle='--', alpha=0.5, linewidth=0.8)
-ax.text(5.5, 96.05, 'SGD avg', color='red', fontsize=8, alpha=0.7)
 ax.grid(axis='y', alpha=0.3)
 ax.set_axisbelow(True)
 plt.tight_layout()
@@ -88,7 +82,6 @@ plt.close()
 print("Generating Figure 2: Training curves...")
 
 # Load representative runs
-sgd_data = load_json('cifar10_resnet18_SGD_seed42_20260319_133150.json')
 adam_data = load_json('cifar10_resnet18_Adam_seed42_20260315_174449.json')
 adamw_data = load_json('cifar10_resnet18_AdamW_seed42_20260319_133150.json')
 adan_data = load_json('cifar10_resnet18_Adan_seed42_20260316_160525.json')
@@ -99,7 +92,6 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.5))
 
 # Left: Test accuracy
 for name, data, color, ls in [
-    ('SGD', sgd_data, COLORS['SGD'], '-'),
     ('AdamW', adamw_data, COLORS['AdamW'], '-'),
     ('Adan', adan_data, COLORS['Adan'], '-'),
     ('Adam', adam_data, COLORS['Adam'], '-'),
@@ -126,7 +118,6 @@ ax1.set_axisbelow(True)
 
 # Right: Training loss
 for name, data, color, ls in [
-    ('SGD', sgd_data, COLORS['SGD'], '-'),
     ('AdamW', adamw_data, COLORS['AdamW'], '-'),
     ('Adan', adan_data, COLORS['Adan'], '-'),
     ('Adam', adam_data, COLORS['Adam'], '-'),
@@ -264,13 +255,11 @@ plt.close()
 # ============================================================
 print("Generating Figure 5: CIFAR-100 comparison...")
 
-c100_opts = ['SGD', 'LAFTJU', 'Adam', 'AdamW', 'ATJU', 'Adan']
+c100_opts = ['LAFTJU', 'Adam', 'AdamW', 'Adan']
 c100_best = {
-    'SGD': [77.04, 76.43, 77.01],
     'LAFTJU': [76.08, 75.35, 75.62],
     'Adam': [74.04, 74.46, 74.06],
     'AdamW': [71.11, 71.25, 71.59],
-    'ATJU': [70.24, 70.72, 70.25],
     'Adan': [66.30, 66.77, 66.09],
 }
 c100_means = [np.mean(c100_best[o]) for o in c100_opts]
@@ -315,10 +304,6 @@ for bar, val in zip(bars, test_accs):
     ax.text(bar.get_x() + bar.get_width()/2., bar.get_height() + 0.1,
             f'{val:.2f}%', ha='center', va='bottom', fontsize=10, fontweight='bold')
 
-# SGD reference line
-ax.axhline(y=95.99, color='red', linestyle='--', alpha=0.5, linewidth=1)
-ax.text(4.5, 96.05, 'SGD=95.99%', color='red', fontsize=9, alpha=0.7, ha='right')
-
 ax.set_ylabel('Test Accuracy (%)')
 ax.set_title('LAFTJU Evolution on CIFAR-10')
 ax.set_ylim(90, 97)
@@ -353,10 +338,8 @@ sp_test =  [95.68, 95.43, 95.32, 95.55, 95.63, 95.42, 94.34, 95.82, 95.42, 95.61
 ax.scatter(sp_valid, sp_test, c='#f39c12', s=40, edgecolors='black', linewidth=0.5, label='LAFTJU (Sprint)', zorder=4, alpha=0.7)
 
 # Baselines
-for opt, marker, color in [('SGD', '^', COLORS['SGD']), ('AdamW', 's', COLORS['AdamW']), ('Adam', 'D', COLORS['Adam'])]:
-    if opt == 'SGD':
-        v, t = [96.38, 96.34, 96.80], [95.96, 95.82, 96.18]
-    elif opt == 'AdamW':
+for opt, marker, color in [('AdamW', 's', COLORS['AdamW']), ('Adam', 'D', COLORS['Adam'])]:
+    if opt == 'AdamW':
         v, t = [94.88, 95.10, 95.30], [94.61, 94.52, 94.52]
     elif opt == 'Adam':
         v, t = [94.72, 94.44, 94.86], [94.09, 93.61, 94.27]

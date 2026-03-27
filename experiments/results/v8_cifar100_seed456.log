@@ -1,0 +1,63 @@
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_seed456
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 4.0907 | Valid Acc: 17.12% | Test Acc: 0.00% | LR: 0.003000 s=0.025 | Time: 99.0s
+Epoch   5/200 | Train Loss: 2.5868 | Valid Acc: 46.28% | Test Acc: 0.00% | LR: 0.002997 s=0.124 | Time: 105.1s
+Epoch  10/200 | Train Loss: 2.1215 | Valid Acc: 56.40% | Test Acc: 57.84% | LR: 0.002985 s=0.245 | Time: 106.2s
+Epoch  15/200 | Train Loss: 1.9210 | Valid Acc: 59.52% | Test Acc: 57.84% | LR: 0.002964 s=0.358 | Time: 105.2s
+Epoch  20/200 | Train Loss: 1.7747 | Valid Acc: 61.84% | Test Acc: 63.43% | LR: 0.002934 s=0.462 | Time: 106.1s
+Epoch  25/200 | Train Loss: 1.6416 | Valid Acc: 64.04% | Test Acc: 63.43% | LR: 0.002895 s=0.555 | Time: 105.2s
+Epoch  30/200 | Train Loss: 1.5321 | Valid Acc: 65.08% | Test Acc: 67.02% | LR: 0.002847 s=0.635 | Time: 105.9s
+Epoch  35/200 | Train Loss: 1.4214 | Valid Acc: 67.04% | Test Acc: 67.02% | LR: 0.002791 s=0.704 | Time: 104.8s
+Epoch  40/200 | Train Loss: 1.3368 | Valid Acc: 68.62% | Test Acc: 68.74% | LR: 0.002727 s=0.762 | Time: 106.1s
+Epoch  45/200 | Train Loss: 1.2631 | Valid Acc: 67.66% | Test Acc: 68.74% | LR: 0.002656 s=0.809 | Time: 104.8s
+Epoch  50/200 | Train Loss: 1.2065 | Valid Acc: 69.12% | Test Acc: 69.59% | LR: 0.002577 s=0.848 | Time: 106.1s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260319_011919.json
+Epoch  55/200 | Train Loss: 1.1501 | Valid Acc: 68.90% | Test Acc: 69.59% | LR: 0.002492 s=0.880 | Time: 105.1s
+Epoch  60/200 | Train Loss: 1.1072 | Valid Acc: 69.10% | Test Acc: 70.09% | LR: 0.002401 s=0.905 | Time: 106.1s
+Epoch  65/200 | Train Loss: 1.0752 | Valid Acc: 69.34% | Test Acc: 70.09% | LR: 0.002304 s=0.925 | Time: 104.8s
+Epoch  70/200 | Train Loss: 1.0410 | Valid Acc: 70.92% | Test Acc: 71.45% | LR: 0.002202 s=0.941 | Time: 106.1s
+Epoch  75/200 | Train Loss: 1.0107 | Valid Acc: 70.78% | Test Acc: 71.45% | LR: 0.002096 s=0.954 | Time: 104.9s
+Epoch  80/200 | Train Loss: 0.9962 | Valid Acc: 69.92% | Test Acc: 71.08% | LR: 0.001986 s=0.964 | Time: 106.1s
+Epoch  85/200 | Train Loss: 0.9713 | Valid Acc: 71.86% | Test Acc: 71.08% | LR: 0.001873 s=0.972 | Time: 104.9s
+Epoch  90/200 | Train Loss: 0.9560 | Valid Acc: 71.84% | Test Acc: 72.22% | LR: 0.001758 s=0.978 | Time: 106.1s
+Epoch  95/200 | Train Loss: 0.9360 | Valid Acc: 71.72% | Test Acc: 72.22% | LR: 0.001642 s=0.983 | Time: 105.1s
+Epoch 100/200 | Train Loss: 0.9220 | Valid Acc: 72.40% | Test Acc: 72.26% | LR: 0.001524 s=0.987 | Time: 106.3s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260319_011919.json
+Epoch 105/200 | Train Loss: 0.9073 | Valid Acc: 73.12% | Test Acc: 72.26% | LR: 0.001406 s=0.990 | Time: 104.9s
+Epoch 110/200 | Train Loss: 0.8957 | Valid Acc: 72.04% | Test Acc: 73.31% | LR: 0.001289 s=0.992 | Time: 106.0s
+Epoch 115/200 | Train Loss: 0.8844 | Valid Acc: 73.22% | Test Acc: 73.31% | LR: 0.001173 s=0.994 | Time: 104.9s
+Epoch 120/200 | Train Loss: 0.8769 | Valid Acc: 72.98% | Test Acc: 74.34% | LR: 0.001060 s=0.995 | Time: 106.1s
+Epoch 125/200 | Train Loss: 0.8668 | Valid Acc: 73.60% | Test Acc: 74.34% | LR: 0.000948 s=0.996 | Time: 105.0s
+Epoch 130/200 | Train Loss: 0.8584 | Valid Acc: 73.46% | Test Acc: 74.52% | LR: 0.000841 s=0.997 | Time: 106.1s
+Epoch 135/200 | Train Loss: 0.8516 | Valid Acc: 73.60% | Test Acc: 74.52% | LR: 0.000737 s=0.998 | Time: 104.8s
+Epoch 140/200 | Train Loss: 0.8471 | Valid Acc: 73.48% | Test Acc: 74.48% | LR: 0.000638 s=0.998 | Time: 106.2s
+Epoch 145/200 | Train Loss: 0.8403 | Valid Acc: 73.76% | Test Acc: 74.48% | LR: 0.000545 s=0.999 | Time: 105.0s
+Epoch 150/200 | Train Loss: 0.8366 | Valid Acc: 73.68% | Test Acc: 75.15% | LR: 0.000457 s=0.999 | Time: 106.3s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260319_011919.json
+Epoch 155/200 | Train Loss: 0.8317 | Valid Acc: 74.56% | Test Acc: 75.15% | LR: 0.000376 s=0.999 | Time: 105.0s
+Epoch 160/200 | Train Loss: 0.8281 | Valid Acc: 74.42% | Test Acc: 75.48% | LR: 0.000301 s=0.999 | Time: 106.2s
+Epoch 165/200 | Train Loss: 0.8244 | Valid Acc: 74.50% | Test Acc: 75.48% | LR: 0.000234 s=0.999 | Time: 104.9s
+Epoch 170/200 | Train Loss: 0.8234 | Valid Acc: 74.58% | Test Acc: 75.20% | LR: 0.000175 s=1.000 | Time: 106.3s
+Epoch 175/200 | Train Loss: 0.8214 | Valid Acc: 74.46% | Test Acc: 75.20% | LR: 0.000124 s=1.000 | Time: 104.9s
+Epoch 180/200 | Train Loss: 0.8206 | Valid Acc: 74.30% | Test Acc: 75.60% | LR: 0.000082 s=1.000 | Time: 106.0s
+Epoch 185/200 | Train Loss: 0.8191 | Valid Acc: 74.60% | Test Acc: 75.60% | LR: 0.000048 s=1.000 | Time: 104.9s
+Epoch 190/200 | Train Loss: 0.8173 | Valid Acc: 74.66% | Test Acc: 75.73% | LR: 0.000023 s=1.000 | Time: 106.1s
+Epoch 195/200 | Train Loss: 0.8164 | Valid Acc: 74.76% | Test Acc: 75.73% | LR: 0.000008 s=1.000 | Time: 104.8s
+Epoch 200/200 | Train Loss: 0.8172 | Valid Acc: 74.48% | Test Acc: 75.69% | LR: 0.000001 s=1.000 | Time: 103.7s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260319_011919.json
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260319_011919.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_seed456
+Best Valid Acc: 74.90%
+Best Test Acc:  75.62%
+Avg Time/Epoch: 104.8s
+============================================================

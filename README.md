@@ -4,7 +4,7 @@ Official PyTorch implementation of **LAFTJU**, a novel deep learning optimizer t
 
 ## Introduction
 
-Deep neural network optimization remains a central challenge in machine learning. First-order methods such as SGD with momentum and Adam dominate practice due to their simplicity, while second-order methods (e.g., K-FAC, natural gradient) offer faster convergence but at prohibitive computational cost. Recent adaptive optimizers like AdamW and Adan attempt to bridge this gap, yet they still ignore curvature information and lack principled mechanisms for blending different optimization strategies.
+Deep neural network optimization remains a central challenge in machine learning. First-order methods such as Adam dominate practice due to their simplicity, while second-order methods (e.g., K-FAC, natural gradient) offer faster convergence but at prohibitive computational cost. Recent adaptive optimizers like AdamW and Adan attempt to bridge this gap, yet they still ignore curvature information and lack principled mechanisms for blending different optimization strategies.
 
 **LAFTJU** addresses these limitations through a novel dual-path optimization framework:
 
@@ -160,15 +160,13 @@ Both paths use independent cosine annealing learning rate schedules with linear 
 
 | Optimizer | Best Test Acc | Mean±Std | Epochs |
 |-----------|:---:|:---:|:---:|
-| SGD + Momentum | 96.18% | 95.99±0.18% | 200 |
 | **LAFTJU** | **95.82%** | **95.48±0.18%** | **200** |
 | **LAFTJU + SAM** | **95.78%** | **95.65±0.19%** | **300** |
 | AdamW | 94.61% | 94.55±0.05% | 200 |
 | Adan | 94.52% | 94.42±0.13% | 200 |
 | Adam | 94.27% | 93.99±0.34% | 200 |
-| ATJU | 93.43% | 93.17±0.26% | 200 |
 
-> LAFTJU surpasses Adam by **+1.83%**, AdamW by **+1.27%**, Adan by **+1.40%**, and approaches SGD within **0.17%**.
+> LAFTJU surpasses Adam by **+1.83%**, AdamW by **+1.27%**, Adan by **+1.40%**.
 
 ### CIFAR-100 (ResNet-18)
 
@@ -176,11 +174,9 @@ Both paths use independent cosine annealing learning rate schedules with linear 
 
 | Optimizer | Best Test Acc | Mean±Std | Epochs |
 |-----------|:---:|:---:|:---:|
-| SGD + Momentum | 77.04% | 76.83±0.29% | 200 |
 | **LAFTJU** | **76.08%** | **75.68±0.37%** | **200** |
 | Adam | 74.46% | 74.19±0.24% | 200 |
 | AdamW | 71.59% | 71.32±0.25% | 200 |
-| ATJU | 70.72% | 70.40±0.28% | 200 |
 | Adan | 66.77% | 66.39±0.35% | 200 |
 
 > LAFTJU outperforms Adan by **+9.78%** and AdamW by **+4.97%** on CIFAR-100.

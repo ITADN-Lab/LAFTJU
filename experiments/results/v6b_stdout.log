@@ -1,0 +1,143 @@
+[2026-03-17 21:14:13] ============================================
+[2026-03-17 21:14:13] LAKTJU V6 Convergence Fix Pipeline
+[2026-03-17 21:14:13] GPU: NVIDIA GeForce RTX 5090
+[2026-03-17 21:14:13] ============================================
+[2026-03-17 21:14:14] --- Phase 1: Killing running V2 LAKTJU processes ---
+[2026-03-17 21:14:14] Killing LAKTJU PIDs: 827264
+833548
+833549
+833550
+833551
+[2026-03-17 21:14:16] Killed running LAKTJU experiments.
+[2026-03-17 21:14:16] --- Phase 2: Clearing old LAKTJU results ---
+[2026-03-17 21:14:16] Old LAKTJU results removed. Adan + baseline results preserved.
+[2026-03-17 21:14:16] --- Phase 3: LAKTJU 3-seed runs (with V6 fix: eps=1e-4 matching ATJU, no diagonal clip, L2 weight decay) ---
+[2026-03-17 21:14:16] START cifar10_resnet18_LAKTJU_seed42
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 1.6779 | Valid Acc: 48.40% | Test Acc: 0.00% | LR: 0.001000 s=0.010 | Time: 32.1s
+Epoch   5/200 | Train Loss: 0.9450 | Valid Acc: 73.56% | Test Acc: 0.00% | LR: 0.000999 s=0.050 | Time: 34.2s
+[2026-03-17 21:17:14] DONE  cifar10_resnet18_LAKTJU_seed42 (178s)
+[2026-03-17 21:17:14] START cifar100_resnet18_LAKTJU_seed42
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+[2026-03-17 21:17:27] DONE  cifar100_resnet18_LAKTJU_seed42 (13s)
+[2026-03-17 21:17:27] START cifar10_resnet18_LAKTJU_seed123
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed123
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+[2026-03-17 21:17:40] DONE  cifar10_resnet18_LAKTJU_seed123 (13s)
+[2026-03-17 21:17:40] START cifar100_resnet18_LAKTJU_seed123
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_seed123
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 4.0921 | Valid Acc: 12.28% | Test Acc: 0.00% | LR: 0.001000 s=0.010 | Time: 33.0s
+[2026-03-17 21:18:27] DONE  cifar100_resnet18_LAKTJU_seed123 (47s)
+[2026-03-17 21:18:27] START cifar10_resnet18_LAKTJU_seed456
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed456
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+[2026-03-17 21:18:33] DONE  cifar10_resnet18_LAKTJU_seed456 (6s)
+[2026-03-17 21:18:33] START cifar100_resnet18_LAKTJU_seed456
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_seed456
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 4.1041 | Valid Acc: 12.68% | Test Acc: 0.00% | LR: 0.001000 s=0.010 | Time: 15.2s
+[2026-03-17 21:19:00] DONE  cifar100_resnet18_LAKTJU_seed456 (27s)
+[2026-03-17 21:19:00] --- Phase 4: Generating results ---
+Loading experiment results...
+Found 30 completed runs across 10 configurations.
+
+================================================================================
+TABLE: Best Test Accuracy (mean ± std across seeds)
+================================================================================
+
+--- CIFAR10 / ResNet18 ---
+Optimizer    Seeds       Best Valid Acc        Best Test Acc  Avg Time/Epoch
+---------------------------------------------------------------------------
+SGD              3        96.51 ± 0.21%        95.99 ± 0.15%            4.1s
+Adam             3        94.67 ± 0.17%        93.99 ± 0.28%            4.2s
+AdamW            3        95.09 ± 0.17%        94.55 ± 0.04%            4.2s
+ATJU             3        93.82 ± 0.19%        93.17 ± 0.21%            6.2s
+LAKTJU         N/A
+
+--- CIFAR100 / ResNet18 ---
+Optimizer    Seeds       Best Valid Acc        Best Test Acc  Avg Time/Epoch
+---------------------------------------------------------------------------
+SGD              3        77.25 ± 0.67%        76.83 ± 0.28%            4.1s
+Adam             3        74.43 ± 0.46%        74.19 ± 0.19%            4.2s
+AdamW            3        71.65 ± 0.59%        71.32 ± 0.20%            4.2s
+ATJU             3        70.41 ± 0.70%        70.40 ± 0.22%            6.2s
+LAKTJU         N/A
+
+================================================================================
+TABLE: Test Accuracy at Training Milestones
+================================================================================
+
+--- CIFAR10 / ResNet18 ---
+Optimizer          Ep 50      Ep 100      Ep 150      Ep 200
+------------------------------------------------------------
+SGD           82.46±1.2  89.48±0.7  93.11±0.2  96.03±0.1
+Adam          87.99±0.5  91.22±0.6  93.13±0.1  94.05±0.2
+AdamW         92.13±0.2  93.66±0.1  94.45±0.2  94.72±0.0
+ATJU          89.49±0.2  92.41±0.1  93.08±0.2  93.35±0.2
+
+--- CIFAR100 / ResNet18 ---
+Optimizer          Ep 50      Ep 100      Ep 150      Ep 200
+------------------------------------------------------------
+SGD           58.97±0.4  63.15±1.3  72.12±0.1  76.73±0.2
+Adam          64.63±1.0  69.07±0.5  72.75±0.3  74.26±0.1
+AdamW         67.84±0.2  69.76±0.4  70.88±0.1  71.44±0.2
+ATJU          66.15±0.5  68.81±0.2  70.17±0.2  70.37±0.2
+  Saved: ./results/figures/cifar10_resnet18_curves.png
+  Saved: ./results/figures/cifar100_resnet18_curves.png
+  Saved: ./results/figures/epoch_time_comparison.png
+
+Summary saved to ./results/summary.json
+[2026-03-17 21:19:02] ============================================
+[2026-03-17 21:19:02] ALL V6 EXPERIMENTS COMPLETE
+[2026-03-17 21:19:02] ============================================

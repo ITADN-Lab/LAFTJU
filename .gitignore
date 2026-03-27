@@ -2,6 +2,11 @@ __pycache__/
 *.pyc
 .idea/
 experiments/dataset/
+dataset/
+paper/laftju.aux
+paper/laftju.log
+paper/laftju.out
+paper/laftju1.pdf
 experiments/results/*.json
 experiments/results/*.txt
 experiments/results/*.png
