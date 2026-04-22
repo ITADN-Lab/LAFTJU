@@ -1,7 +1,8 @@
 {
   "id": "medium_LAKTJU_NS_seed123",
-  "status": "running",
+  "status": "done",
   "worker": "hadoop-4021659",
   "cmd": "python3 train_gpt2_lm.py --dataset wikitext --seed 123 --output_dir results_gpt2 --model_size medium --optimizer LAKTJU_NS --lr 6e-4 --weight_decay 0.1 --total_steps 10000 --batch_size 4 --grad_accum 4 --warmup_steps 1000 --eval_interval 1000 --log_interval 100 --ns_interval 50 --ns_steps 2 --ns_max_dim 1024",
-  "est_hours": 1.5
+  "est_hours": 1.5,
+  "result_file": "/home/hadoop/workstations/LAFTJU/experiments/results_gpt2/gpt2_medium_LAKTJU_NS_ns50_K2_maxd1024_lr0.0006_seed123.json"
 }
