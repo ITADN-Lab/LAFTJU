@@ -1,7 +1,8 @@
 {
   "id": "medium_AdamW_seed456",
-  "status": "running",
+  "status": "done",
   "worker": "hadoop-4021658",
   "cmd": "python3 train_gpt2_lm.py --dataset wikitext --seed 456 --output_dir results_gpt2 --model_size medium --optimizer AdamW --lr 6e-4 --weight_decay 0.1 --total_steps 10000 --batch_size 4 --grad_accum 4 --warmup_steps 1000 --eval_interval 1000 --log_interval 100",
-  "est_hours": 1.5
+  "est_hours": 1.5,
+  "result_file": "/home/hadoop/workstations/LAFTJU/experiments/results_gpt2/gpt2_medium_AdamW_lr0.0006_seed456.json"
 }
