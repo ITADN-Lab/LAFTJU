@@ -1,0 +1,71 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed123
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 1.8272 | Valid Acc: 53.76% | Test Acc: 0.00% | LR: 0.003000 s=0.025 | Time: 164.4s
+Epoch   5/200 | Train Loss: 1.0701 | Valid Acc: 79.62% | Test Acc: 0.00% | LR: 0.002997 s=0.124 | Time: 475.7s
+Epoch  10/200 | Train Loss: 0.9278 | Valid Acc: 85.68% | Test Acc: 85.78% | LR: 0.002985 s=0.245 | Time: 488.1s
+Epoch  15/200 | Train Loss: 0.8547 | Valid Acc: 86.24% | Test Acc: 85.78% | LR: 0.002964 s=0.358 | Time: 484.7s
+Epoch  20/200 | Train Loss: 0.8089 | Valid Acc: 88.60% | Test Acc: 89.08% | LR: 0.002934 s=0.462 | Time: 488.1s
+Epoch  25/200 | Train Loss: 0.7733 | Valid Acc: 90.28% | Test Acc: 89.08% | LR: 0.002895 s=0.555 | Time: 481.7s
+Epoch  30/200 | Train Loss: 0.7405 | Valid Acc: 90.98% | Test Acc: 90.71% | LR: 0.002847 s=0.635 | Time: 171.9s
+Traceback (most recent call last):
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 426, in <module>
+    main()
+    ~~~~^^
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 355, in main
+    train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device, epoch, args)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 223, in train_one_epoch
+    output2 = model(data)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/ResNet.py", line 198, in forward
+    return self._forward_impl(x)
+           ~~~~~~~~~~~~~~~~~~^^^
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/ResNet.py", line 188, in _forward_impl
+    x = self.layer3(x)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/ResNet.py", line 37, in forward
+    out = self.conv1(x)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1881, in _call_impl
+    return inner()
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1818, in inner
+    args_result = hook(self, args)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/../LAKTJU.py", line 105, in _forward_hook
+    a = self._extract_conv_input(module, a)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/../LAKTJU.py", line 150, in _extract_conv_input
+    a_unf = torch.nn.functional.unfold(a, kernel_size=k, stride=s, padding=p)
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/nn/functional.py", line 5615, in unfold
+    return torch._C._nn.im2col(
+           ~~~~~~~~~~~~~~~~~~~^
+        input, _pair(kernel_size), _pair(dilation), _pair(padding), _pair(stride)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/utils/data/_utils/signal_handling.py", line 73, in handler
+    _error_if_any_worker_fails()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: DataLoader worker (pid 2854604) is killed by signal: Terminated. 

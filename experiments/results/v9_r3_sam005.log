@@ -1,0 +1,30 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/50 | Train Loss: 1.8098 | Valid Acc: 55.50% | Test Acc: 0.00% | LR: 0.003000 s=0.100 | Time: 109.4s
+Epoch   5/50 | Train Loss: 1.0726 | Valid Acc: 79.72% | Test Acc: 0.00% | LR: 0.002953 s=0.462 | Time: 113.1s
+Epoch  10/50 | Train Loss: 0.9117 | Valid Acc: 85.76% | Test Acc: 86.09% | LR: 0.002767 s=0.762 | Time: 114.1s
+Epoch  15/50 | Train Loss: 0.8159 | Valid Acc: 87.74% | Test Acc: 86.09% | LR: 0.002456 s=0.905 | Time: 113.5s
+Epoch  20/50 | Train Loss: 0.7495 | Valid Acc: 90.92% | Test Acc: 90.57% | LR: 0.002053 s=0.964 | Time: 114.4s
+Epoch  25/50 | Train Loss: 0.6965 | Valid Acc: 92.44% | Test Acc: 92.12% | LR: 0.001595 s=0.987 | Time: 114.4s
+Epoch  30/50 | Train Loss: 0.6443 | Valid Acc: 93.54% | Test Acc: 93.26% | LR: 0.001128 s=0.995 | Time: 114.6s
+Epoch  35/50 | Train Loss: 0.6079 | Valid Acc: 94.32% | Test Acc: 93.26% | LR: 0.000697 s=0.998 | Time: 113.6s
+Epoch  40/50 | Train Loss: 0.5836 | Valid Acc: 94.60% | Test Acc: 94.32% | LR: 0.000345 s=0.999 | Time: 114.5s
+Epoch  45/50 | Train Loss: 0.5703 | Valid Acc: 95.00% | Test Acc: 94.32% | LR: 0.000106 s=1.000 | Time: 113.6s
+Epoch  50/50 | Train Loss: 0.5648 | Valid Acc: 95.02% | Test Acc: 94.73% | LR: 0.000004 s=1.000 | Time: 114.5s
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed42_20260319_114058.json
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed42_20260319_114058.json
+
+============================================================
+Training complete: cifar10_resnet18_LAKTJU_seed42
+Best Valid Acc: 95.12%
+Best Test Acc:  94.54%
+Avg Time/Epoch: 113.3s
+============================================================

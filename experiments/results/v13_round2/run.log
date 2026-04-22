@@ -1,0 +1,15 @@
+============================================
+  LAKTJU V13 Round 2: lr=0.01 正确配置
+  目标: C10≥96.2%, C100≥78.3%
+  Max parallel: 10
+============================================
+[Launch] c10_lr01_s42
+[Launch] c100_lr01_s42
+[Launch] c10_lr01_s123
+[Launch] c100_lr01_s123
+[Launch] c10_lr01_s456
+[Launch] c100_lr01_s456
+[Launch] c10_lr01_sam_s42
+[Launch] c100_lr01_sam_s42
+[Launch] c10_lr01_sam_s123
+[Launch] c100_lr01_sam_s123

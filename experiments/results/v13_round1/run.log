@@ -1,0 +1,21 @@
+============================================
+  LAKTJU V13 Round 1: V8参数微调+SAM
+  目标: C10≥96.2%, C100≥78.3%
+  Max parallel: 10
+============================================
+[Launch] c10_v8_baseline_s42
+[Launch] c100_v8_baseline_s42
+[Launch] c10_v8_baseline_s123
+[Launch] c100_v8_baseline_s123
+[Launch] c10_v8_baseline_s456
+[Launch] c100_v8_baseline_s456
+[Launch] c10_v8_sam_s42
+[Launch] c100_v8_sam_s42
+[Launch] c10_v8_sam_s123
+[Launch] c100_v8_sam_s123
+[Launch] c100_v8_lr3e-3_s42
+[Launch] c100_v8_lr3e-3_s123
+[Launch] c100_v8_wd5e-4_s42
+[Launch] c100_v8_wd5e-4_s123
+[Launch] c100_v8_hs3_s42
+[Launch] c100_v8_hs3_s123

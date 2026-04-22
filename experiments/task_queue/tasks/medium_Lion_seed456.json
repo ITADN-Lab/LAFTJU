@@ -1,0 +1,7 @@
+{
+  "id": "medium_Lion_seed456",
+  "status": "pending",
+  "worker": null,
+  "cmd": "python3 train_gpt2_lm.py --dataset wikitext --seed 456 --output_dir results_gpt2 --model_size medium --optimizer Lion --lr 1e-4 --weight_decay 1.0 --total_steps 10000 --batch_size 4 --grad_accum 4 --warmup_steps 1000 --eval_interval 1000 --log_interval 100",
+  "est_hours": 1.5
+}

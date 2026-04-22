@@ -1,0 +1,41 @@
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU_V11
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_V11_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+  [V11 diag] adam_norm=27.6392 kf_applied=0/434 cos_sim=0.0000 eff_alpha=0.0000
+Epoch   1/50 | Train Loss: 4.0229 | Valid Acc: 16.24% | Test Acc: 0.00% | LR: 0.000999 | Time: 112.0s
+  [V11 diag] adam_norm=33.8574 kf_applied=525/1736 cos_sim=0.4032 eff_alpha=0.0806
+Epoch   5/50 | Train Loss: 2.6686 | Valid Acc: 44.10% | Test Acc: 0.00% | LR: 0.000976 | Time: 194.4s
+  [V11 diag] adam_norm=39.7668 kf_applied=735/2170 cos_sim=0.4503 eff_alpha=0.0901
+Epoch  10/50 | Train Loss: 2.1184 | Valid Acc: 58.26% | Test Acc: 56.80% | LR: 0.000905 | Time: 195.9s
+  [V11 diag] adam_norm=42.5150 kf_applied=735/2170 cos_sim=0.4797 eff_alpha=0.0959
+Epoch  15/50 | Train Loss: 1.7969 | Valid Acc: 64.62% | Test Acc: 56.80% | LR: 0.000794 | Time: 195.1s
+  [V11 diag] adam_norm=43.3736 kf_applied=735/2170 cos_sim=0.4961 eff_alpha=0.0992
+Epoch  20/50 | Train Loss: 1.5450 | Valid Acc: 67.48% | Test Acc: 67.89% | LR: 0.000655 | Time: 147.9s
+  [V11 diag] adam_norm=44.0606 kf_applied=756/2232 cos_sim=0.5035 eff_alpha=0.1007
+Epoch  25/50 | Train Loss: 1.3616 | Valid Acc: 69.08% | Test Acc: 69.77% | LR: 0.000500 | Time: 148.1s
+  [V11 diag] adam_norm=42.9744 kf_applied=735/2170 cos_sim=0.5072 eff_alpha=0.1014
+Epoch  30/50 | Train Loss: 1.2116 | Valid Acc: 71.02% | Test Acc: 70.76% | LR: 0.000346 | Time: 147.9s
+  [V11 diag] adam_norm=42.2891 kf_applied=735/2170 cos_sim=0.5073 eff_alpha=0.1015
+Epoch  35/50 | Train Loss: 1.1222 | Valid Acc: 71.96% | Test Acc: 70.76% | LR: 0.000207 | Time: 145.8s
+  [V11 diag] adam_norm=41.3612 kf_applied=735/2170 cos_sim=0.5079 eff_alpha=0.1016
+Epoch  40/50 | Train Loss: 1.0605 | Valid Acc: 72.60% | Test Acc: 71.80% | LR: 0.000096 | Time: 147.8s
+  [V11 diag] adam_norm=41.6342 kf_applied=735/2170 cos_sim=0.5085 eff_alpha=0.1017
+Epoch  45/50 | Train Loss: 1.0345 | Valid Acc: 72.74% | Test Acc: 71.80% | LR: 0.000025 | Time: 145.9s
+  [V11 diag] adam_norm=42.6819 kf_applied=756/2232 cos_sim=0.5100 eff_alpha=0.1020
+Epoch  50/50 | Train Loss: 1.0242 | Valid Acc: 72.32% | Test Acc: 72.61% | LR: 0.000001 | Time: 143.8s
+Results saved to ./results/v11_round1/cifar100_resnet18_LAKTJU_V11_seed42_20260320_233624.json
+Results saved to ./results/v11_round1/cifar100_resnet18_LAKTJU_V11_seed42_20260320_233624.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_V11_seed42
+Best Valid Acc: 72.74%
+Best Test Acc:  72.59%
+Avg Time/Epoch: 158.0s
+============================================================

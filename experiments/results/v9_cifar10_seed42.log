@@ -1,0 +1,54 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 1.8360 | Valid Acc: 52.72% | Test Acc: 0.00% | LR: 0.003000 s=0.025 | Time: 164.9s
+Epoch   5/200 | Train Loss: 1.0649 | Valid Acc: 82.20% | Test Acc: 0.00% | LR: 0.002997 s=0.124 | Time: 475.6s
+Epoch  10/200 | Train Loss: 0.9204 | Valid Acc: 86.54% | Test Acc: 86.06% | LR: 0.002985 s=0.245 | Time: 488.2s
+Epoch  15/200 | Train Loss: 0.8515 | Valid Acc: 88.00% | Test Acc: 86.06% | LR: 0.002964 s=0.358 | Time: 485.1s
+Epoch  20/200 | Train Loss: 0.8053 | Valid Acc: 90.30% | Test Acc: 89.51% | LR: 0.002934 s=0.462 | Time: 488.1s
+Epoch  25/200 | Train Loss: 0.7724 | Valid Acc: 88.60% | Test Acc: 89.51% | LR: 0.002895 s=0.555 | Time: 482.5s
+Epoch  30/200 | Train Loss: 0.7395 | Valid Acc: 91.22% | Test Acc: 90.94% | LR: 0.002847 s=0.635 | Time: 172.0s
+Traceback (most recent call last):
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 426, in <module>
+    main()
+    ~~~~^^
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 355, in main
+    train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device, epoch, args)
+  File "/home/hadoop/workstation/md/TJU-V5(ATJU)-sourcecode/ATJU/experiments/train_laktju.py", line 225, in train_one_epoch
+    loss2.backward()
+    ~~~~~~~~~~~~~~^^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/_tensor.py", line 625, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/autograd/__init__.py", line 354, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/autograd/graph.py", line 841, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+  File "/home/hadoop/anaconda3/lib/python3.13/site-packages/torch/utils/data/_utils/signal_handling.py", line 73, in handler
+    _error_if_any_worker_fails()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: DataLoader worker (pid 2854612) is killed by signal: Terminated. 

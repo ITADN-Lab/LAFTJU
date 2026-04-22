@@ -1,0 +1,201 @@
+[2026-03-16 19:02:41] ============================================
+[2026-03-16 19:02:41] LAKTJU V3 Performance Fix Pipeline
+[2026-03-16 19:02:41] GPU: NVIDIA GeForce RTX 5090
+[2026-03-16 19:02:41] ============================================
+[2026-03-16 19:02:43] --- Phase 1: Killing running V2 LAKTJU processes ---
+[2026-03-16 19:02:43] Killing LAKTJU PIDs: 237520
+237521
+237523
+237529
+4087662
+[2026-03-16 19:02:45] Killed running LAKTJU experiments.
+[2026-03-16 19:02:45] --- Phase 2: Clearing old LAKTJU results ---
+[2026-03-16 19:02:45] Old LAKTJU results removed. Adan + baseline results preserved.
+[2026-03-16 19:02:45] --- Phase 3: LAKTJU 3-seed runs (with perf fixes) ---
+[2026-03-16 19:02:45] START cifar10_resnet18_LAKTJU_seed42
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed42_20260316_190247.json
+Epoch 155/200 | Train Loss: 0.1279 | Valid Acc: 90.12% | Test Acc: 89.41% | LR: 0.000126 s=0.914 | Time: 43.4s
+Epoch 160/200 | Train Loss: 0.1228 | Valid Acc: 90.10% | Test Acc: 89.76% | LR: 0.000101 s=0.922 | Time: 43.9s
+Epoch 165/200 | Train Loss: 0.1147 | Valid Acc: 90.40% | Test Acc: 89.76% | LR: 0.000079 s=0.929 | Time: 43.5s
+Epoch 170/200 | Train Loss: 0.1104 | Valid Acc: 90.18% | Test Acc: 89.91% | LR: 0.000059 s=0.935 | Time: 43.8s
+Epoch 175/200 | Train Loss: 0.1056 | Valid Acc: 90.46% | Test Acc: 89.91% | LR: 0.000042 s=0.941 | Time: 43.5s
+Epoch 180/200 | Train Loss: 0.1016 | Valid Acc: 90.28% | Test Acc: 90.09% | LR: 0.000028 s=0.947 | Time: 43.9s
+Epoch 185/200 | Train Loss: 0.1002 | Valid Acc: 90.70% | Test Acc: 90.09% | LR: 0.000017 s=0.952 | Time: 43.4s
+Epoch 190/200 | Train Loss: 0.0979 | Valid Acc: 90.56% | Test Acc: 89.99% | LR: 0.000008 s=0.956 | Time: 44.0s
+Epoch 195/200 | Train Loss: 0.0959 | Valid Acc: 90.56% | Test Acc: 89.99% | LR: 0.000003 s=0.960 | Time: 43.4s
+Epoch 200/200 | Train Loss: 0.0947 | Valid Acc: 90.66% | Test Acc: 90.15% | LR: 0.000001 s=0.964 | Time: 43.7s
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed42_20260316_190247.json
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed42_20260316_190247.json
+
+============================================================
+Training complete: cifar10_resnet18_LAKTJU_seed42
+Best Valid Acc: 90.96%
+Best Test Acc:  90.03%
+Avg Time/Epoch: 43.4s
+============================================================
+[2026-03-16 21:28:03] DONE  cifar10_resnet18_LAKTJU_seed42 (8718s)
+[2026-03-16 21:28:04] START cifar100_resnet18_LAKTJU_seed42
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed42_20260316_212807.json
+Epoch 155/200 | Train Loss: 0.2264 | Valid Acc: 62.58% | Test Acc: 62.85% | LR: 0.000126 s=0.914 | Time: 43.3s
+Epoch 160/200 | Train Loss: 0.2108 | Valid Acc: 63.18% | Test Acc: 63.22% | LR: 0.000101 s=0.922 | Time: 43.8s
+Epoch 165/200 | Train Loss: 0.2023 | Valid Acc: 62.62% | Test Acc: 63.22% | LR: 0.000079 s=0.929 | Time: 43.4s
+Epoch 170/200 | Train Loss: 0.1936 | Valid Acc: 63.74% | Test Acc: 63.24% | LR: 0.000059 s=0.935 | Time: 44.0s
+Epoch 175/200 | Train Loss: 0.1783 | Valid Acc: 63.44% | Test Acc: 63.24% | LR: 0.000042 s=0.941 | Time: 43.5s
+Epoch 180/200 | Train Loss: 0.1770 | Valid Acc: 63.48% | Test Acc: 63.11% | LR: 0.000028 s=0.947 | Time: 44.0s
+Epoch 185/200 | Train Loss: 0.1666 | Valid Acc: 63.56% | Test Acc: 63.11% | LR: 0.000017 s=0.952 | Time: 43.6s
+Epoch 190/200 | Train Loss: 0.1661 | Valid Acc: 63.56% | Test Acc: 63.21% | LR: 0.000008 s=0.956 | Time: 44.0s
+Epoch 195/200 | Train Loss: 0.1659 | Valid Acc: 63.16% | Test Acc: 63.21% | LR: 0.000003 s=0.960 | Time: 43.6s
+Epoch 200/200 | Train Loss: 0.1651 | Valid Acc: 63.32% | Test Acc: 63.34% | LR: 0.000001 s=0.964 | Time: 43.8s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed42_20260316_212807.json
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed42_20260316_212807.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_seed42
+Best Valid Acc: 63.78%
+Best Test Acc:  63.38%
+Avg Time/Epoch: 43.4s
+============================================================
+[2026-03-16 23:53:18] DONE  cifar100_resnet18_LAKTJU_seed42 (8714s)
+[2026-03-16 23:53:19] START cifar10_resnet18_LAKTJU_seed123
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed123_20260316_235321.json
+Epoch 155/200 | Train Loss: 0.1222 | Valid Acc: 89.78% | Test Acc: 89.42% | LR: 0.000126 s=0.914 | Time: 43.5s
+Epoch 160/200 | Train Loss: 0.1179 | Valid Acc: 89.76% | Test Acc: 89.77% | LR: 0.000101 s=0.922 | Time: 43.7s
+Epoch 165/200 | Train Loss: 0.1067 | Valid Acc: 89.94% | Test Acc: 89.77% | LR: 0.000079 s=0.929 | Time: 43.3s
+Epoch 170/200 | Train Loss: 0.1062 | Valid Acc: 90.02% | Test Acc: 90.24% | LR: 0.000059 s=0.935 | Time: 43.8s
+Epoch 175/200 | Train Loss: 0.1041 | Valid Acc: 90.12% | Test Acc: 90.24% | LR: 0.000042 s=0.941 | Time: 43.4s
+Epoch 180/200 | Train Loss: 0.0989 | Valid Acc: 90.46% | Test Acc: 90.10% | LR: 0.000028 s=0.947 | Time: 43.8s
+Epoch 185/200 | Train Loss: 0.0984 | Valid Acc: 90.36% | Test Acc: 90.10% | LR: 0.000017 s=0.952 | Time: 43.4s
+Epoch 190/200 | Train Loss: 0.0930 | Valid Acc: 90.46% | Test Acc: 90.27% | LR: 0.000008 s=0.956 | Time: 43.6s
+Epoch 195/200 | Train Loss: 0.0915 | Valid Acc: 90.52% | Test Acc: 90.27% | LR: 0.000003 s=0.960 | Time: 43.3s
+Epoch 200/200 | Train Loss: 0.0922 | Valid Acc: 90.54% | Test Acc: 90.29% | LR: 0.000001 s=0.964 | Time: 43.7s
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed123_20260316_235321.json
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed123_20260316_235321.json
+
+============================================================
+Training complete: cifar10_resnet18_LAKTJU_seed123
+Best Valid Acc: 90.70%
+Best Test Acc:  90.23%
+Avg Time/Epoch: 43.3s
+============================================================
+[2026-03-17 02:18:18] DONE  cifar10_resnet18_LAKTJU_seed123 (8699s)
+[2026-03-17 02:18:23] START cifar100_resnet18_LAKTJU_seed123
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed123_20260317_021825.json
+Epoch 155/200 | Train Loss: 0.2028 | Valid Acc: 61.94% | Test Acc: 62.22% | LR: 0.000126 s=0.914 | Time: 43.5s
+Epoch 160/200 | Train Loss: 0.1901 | Valid Acc: 61.84% | Test Acc: 62.32% | LR: 0.000101 s=0.922 | Time: 43.9s
+Epoch 165/200 | Train Loss: 0.1825 | Valid Acc: 62.24% | Test Acc: 62.32% | LR: 0.000079 s=0.929 | Time: 43.5s
+Epoch 170/200 | Train Loss: 0.1675 | Valid Acc: 61.80% | Test Acc: 62.92% | LR: 0.000059 s=0.935 | Time: 43.8s
+Epoch 175/200 | Train Loss: 0.1597 | Valid Acc: 61.90% | Test Acc: 62.92% | LR: 0.000042 s=0.941 | Time: 43.4s
+Epoch 180/200 | Train Loss: 0.1529 | Valid Acc: 62.16% | Test Acc: 62.82% | LR: 0.000028 s=0.947 | Time: 43.9s
+Epoch 185/200 | Train Loss: 0.1510 | Valid Acc: 62.36% | Test Acc: 62.82% | LR: 0.000017 s=0.952 | Time: 43.7s
+Epoch 190/200 | Train Loss: 0.1439 | Valid Acc: 62.36% | Test Acc: 62.71% | LR: 0.000008 s=0.956 | Time: 43.8s
+Epoch 195/200 | Train Loss: 0.1443 | Valid Acc: 62.36% | Test Acc: 62.71% | LR: 0.000003 s=0.960 | Time: 43.5s
+Epoch 200/200 | Train Loss: 0.1403 | Valid Acc: 62.36% | Test Acc: 62.81% | LR: 0.000001 s=0.964 | Time: 32.9s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed123_20260317_021825.json
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed123_20260317_021825.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_seed123
+Best Valid Acc: 62.58%
+Best Test Acc:  62.82%
+Avg Time/Epoch: 43.4s
+============================================================
+[2026-03-17 04:43:39] DONE  cifar100_resnet18_LAKTJU_seed123 (8716s)
+[2026-03-17 04:43:41] START cifar10_resnet18_LAKTJU_seed456
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed456_20260317_044343.json
+Epoch 155/200 | Train Loss: 0.1571 | Valid Acc: 90.12% | Test Acc: 89.40% | LR: 0.000126 s=0.914 | Time: 17.0s
+Epoch 160/200 | Train Loss: 0.1543 | Valid Acc: 90.02% | Test Acc: 89.79% | LR: 0.000101 s=0.922 | Time: 17.4s
+Epoch 165/200 | Train Loss: 0.1471 | Valid Acc: 90.14% | Test Acc: 89.79% | LR: 0.000079 s=0.929 | Time: 17.0s
+Epoch 170/200 | Train Loss: 0.1397 | Valid Acc: 90.48% | Test Acc: 89.59% | LR: 0.000059 s=0.935 | Time: 17.4s
+Epoch 175/200 | Train Loss: 0.1345 | Valid Acc: 90.34% | Test Acc: 89.59% | LR: 0.000042 s=0.941 | Time: 17.0s
+Epoch 180/200 | Train Loss: 0.1342 | Valid Acc: 90.24% | Test Acc: 89.65% | LR: 0.000028 s=0.947 | Time: 17.4s
+Epoch 185/200 | Train Loss: 0.1301 | Valid Acc: 90.24% | Test Acc: 89.65% | LR: 0.000017 s=0.952 | Time: 17.0s
+Epoch 190/200 | Train Loss: 0.1285 | Valid Acc: 90.22% | Test Acc: 89.87% | LR: 0.000008 s=0.956 | Time: 17.4s
+Epoch 195/200 | Train Loss: 0.1273 | Valid Acc: 90.36% | Test Acc: 89.87% | LR: 0.000003 s=0.960 | Time: 17.0s
+Epoch 200/200 | Train Loss: 0.1243 | Valid Acc: 90.30% | Test Acc: 89.94% | LR: 0.000001 s=0.964 | Time: 17.4s
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed456_20260317_044343.json
+Results saved to ./results/cifar10_resnet18_LAKTJU_seed456_20260317_044343.json
+
+============================================================
+Training complete: cifar10_resnet18_LAKTJU_seed456
+Best Valid Acc: 90.56%
+Best Test Acc:  89.83%
+Avg Time/Epoch: 17.0s
+============================================================
+[2026-03-17 05:40:47] DONE  cifar10_resnet18_LAKTJU_seed456 (3426s)
+[2026-03-17 05:40:49] START cifar100_resnet18_LAKTJU_seed456
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260317_054051.json
+Epoch 155/200 | Train Loss: 0.2123 | Valid Acc: 61.02% | Test Acc: 61.67% | LR: 0.000126 s=0.914 | Time: 17.0s
+Epoch 160/200 | Train Loss: 0.1913 | Valid Acc: 60.96% | Test Acc: 61.98% | LR: 0.000101 s=0.922 | Time: 17.4s
+Epoch 165/200 | Train Loss: 0.1822 | Valid Acc: 61.22% | Test Acc: 61.98% | LR: 0.000079 s=0.929 | Time: 17.0s
+Epoch 170/200 | Train Loss: 0.1687 | Valid Acc: 61.62% | Test Acc: 62.37% | LR: 0.000059 s=0.935 | Time: 17.3s
+Epoch 175/200 | Train Loss: 0.1668 | Valid Acc: 61.30% | Test Acc: 62.37% | LR: 0.000042 s=0.941 | Time: 17.0s
+Epoch 180/200 | Train Loss: 0.1567 | Valid Acc: 61.50% | Test Acc: 62.55% | LR: 0.000028 s=0.947 | Time: 17.4s
+Epoch 185/200 | Train Loss: 0.1557 | Valid Acc: 61.46% | Test Acc: 62.55% | LR: 0.000017 s=0.952 | Time: 17.0s
+Epoch 190/200 | Train Loss: 0.1521 | Valid Acc: 61.46% | Test Acc: 62.54% | LR: 0.000008 s=0.956 | Time: 17.3s
+Epoch 195/200 | Train Loss: 0.1501 | Valid Acc: 61.58% | Test Acc: 62.54% | LR: 0.000003 s=0.960 | Time: 17.0s
+Epoch 200/200 | Train Loss: 0.1477 | Valid Acc: 61.56% | Test Acc: 62.44% | LR: 0.000001 s=0.964 | Time: 17.4s
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260317_054051.json
+Results saved to ./results/cifar100_resnet18_LAKTJU_seed456_20260317_054051.json
+
+============================================================
+Training complete: cifar100_resnet18_LAKTJU_seed456
+Best Valid Acc: 61.74%
+Best Test Acc:  62.48%
+Avg Time/Epoch: 17.0s
+============================================================
+[2026-03-17 06:37:55] DONE  cifar100_resnet18_LAKTJU_seed456 (3426s)
+[2026-03-17 06:37:56] --- Phase 4: Generating results ---
+Loading experiment results...
+Found 40 completed runs across 12 configurations.
+
+================================================================================
+TABLE: Best Test Accuracy (mean ± std across seeds)
+================================================================================
+
+--- CIFAR10 / ResNet18 ---
+Optimizer    Seeds       Best Valid Acc        Best Test Acc  Avg Time/Epoch
+---------------------------------------------------------------------------
+SGD              3        96.51 ± 0.21%        95.99 ± 0.15%            4.1s
+Adam             3        94.67 ± 0.17%        93.99 ± 0.28%            4.2s
+AdamW            3        95.09 ± 0.17%        94.55 ± 0.04%            4.2s
+ATJU             3        93.82 ± 0.19%        93.17 ± 0.21%            6.2s
+LAKTJU           5        90.70 ± 0.15%        90.03 ± 0.18%           38.1s
+
+--- CIFAR100 / ResNet18 ---
+Optimizer    Seeds       Best Valid Acc        Best Test Acc  Avg Time/Epoch
+---------------------------------------------------------------------------
+SGD              3        77.25 ± 0.67%        76.83 ± 0.28%            4.1s
+Adam             3        74.43 ± 0.46%        74.19 ± 0.19%            4.2s
+AdamW            3        71.65 ± 0.59%        71.32 ± 0.20%            4.2s
+ATJU             3        70.41 ± 0.70%        70.40 ± 0.22%            6.2s
+LAKTJU           5        62.48 ± 0.75%        62.80 ± 0.33%           38.1s
+
+================================================================================
+TABLE: Test Accuracy at Training Milestones
+================================================================================
+
+--- CIFAR10 / ResNet18 ---
+Optimizer          Ep 50      Ep 100      Ep 150      Ep 200
+------------------------------------------------------------
+SGD           82.46±1.2  89.48±0.7  93.11±0.2  96.03±0.1
+Adam          87.99±0.5  91.22±0.6  93.13±0.1  94.05±0.2
+AdamW         92.13±0.2  93.66±0.1  94.45±0.2  94.72±0.0
+ATJU          89.49±0.2  92.41±0.1  93.08±0.2  93.35±0.2
+LAKTJU        82.23±0.8  87.48±0.3  89.41±0.0  90.12±0.2
+
+--- CIFAR100 / ResNet18 ---
+Optimizer          Ep 50      Ep 100      Ep 150      Ep 200
+------------------------------------------------------------
+SGD           58.97±0.4  63.15±1.3  72.12±0.1  76.73±0.2
+Adam          64.63±1.0  69.07±0.5  72.75±0.3  74.26±0.1
+AdamW         67.84±0.2  69.76±0.4  70.88±0.1  71.44±0.2
+ATJU          66.15±0.5  68.81±0.2  70.17±0.2  70.37±0.2
+LAKTJU        52.29±1.3  60.69±0.5  62.13±0.4  62.77±0.3
+  Saved: ./results/figures/cifar10_resnet18_curves.png
+  Saved: ./results/figures/cifar100_resnet18_curves.png
+  Saved: ./results/figures/epoch_time_comparison.png
+
+Summary saved to ./results/summary.json
+[2026-03-17 06:37:58] ============================================
+[2026-03-17 06:37:58] ALL V3 EXPERIMENTS COMPLETE
+[2026-03-17 06:37:58] ============================================

@@ -1,0 +1,14 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar10_resnet18_LAKTJU_seed42
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/50 | Train Loss: 7.3084 | Valid Acc: 9.30% | Test Acc: 0.00% | LR: 0.050000 s=0.100 | Time: 63.7s
+Epoch   5/50 | Train Loss: 11738499.6597 | Valid Acc: 10.52% | Test Acc: 0.00% | LR: 0.049215 s=0.462 | Time: 68.2s
+Epoch  10/50 | Train Loss: 3333129579.3607 | Valid Acc: 10.82% | Test Acc: 10.14% | LR: 0.046108 s=0.762 | Time: 69.2s
+Epoch  15/50 | Train Loss: 771745665.4677 | Valid Acc: 9.94% | Test Acc: 10.14% | LR: 0.040936 s=0.905 | Time: 68.1s

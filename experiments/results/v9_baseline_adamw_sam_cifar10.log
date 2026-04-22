@@ -1,0 +1,62 @@
+Device: cuda
+Dataset: cifar10 (10 classes)
+Model: resnet18 (11,173,962 params)
+Optimizer: AdamW
+
+============================================================
+Starting training: cifar10_resnet18_AdamW_seed42
+============================================================
+
+Epoch   1/200 | Train Loss: 1.7283 | Valid Acc: 50.92% | Test Acc: 0.00% | LR: 0.001000 | Time: 50.9s
+Epoch   5/200 | Train Loss: 1.0815 | Valid Acc: 80.80% | Test Acc: 0.00% | LR: 0.000998 | Time: 50.5s
+Epoch  10/200 | Train Loss: 0.9005 | Valid Acc: 86.52% | Test Acc: 85.76% | LR: 0.000994 | Time: 52.7s
+Epoch  15/200 | Train Loss: 0.8130 | Valid Acc: 88.72% | Test Acc: 85.76% | LR: 0.000986 | Time: 49.6s
+Epoch  20/200 | Train Loss: 0.7609 | Valid Acc: 90.90% | Test Acc: 90.24% | LR: 0.000976 | Time: 52.7s
+Epoch  25/200 | Train Loss: 0.7172 | Valid Acc: 92.32% | Test Acc: 90.24% | LR: 0.000962 | Time: 49.6s
+Epoch  30/200 | Train Loss: 0.6837 | Valid Acc: 92.44% | Test Acc: 91.84% | LR: 0.000946 | Time: 53.0s
+Epoch  35/200 | Train Loss: 0.6568 | Valid Acc: 92.40% | Test Acc: 91.84% | LR: 0.000926 | Time: 49.6s
+Epoch  40/200 | Train Loss: 0.6406 | Valid Acc: 92.86% | Test Acc: 92.23% | LR: 0.000905 | Time: 52.5s
+Epoch  45/200 | Train Loss: 0.6236 | Valid Acc: 93.36% | Test Acc: 92.23% | LR: 0.000880 | Time: 50.5s
+Epoch  50/200 | Train Loss: 0.6109 | Valid Acc: 94.02% | Test Acc: 93.36% | LR: 0.000854 | Time: 52.6s
+Results saved to ./results/cifar10_resnet18_AdamW_seed42_20260319_133150.json
+Epoch  55/200 | Train Loss: 0.5990 | Valid Acc: 93.86% | Test Acc: 93.36% | LR: 0.000825 | Time: 50.3s
+Epoch  60/200 | Train Loss: 0.5874 | Valid Acc: 94.14% | Test Acc: 93.60% | LR: 0.000794 | Time: 52.6s
+Epoch  65/200 | Train Loss: 0.5761 | Valid Acc: 93.90% | Test Acc: 93.60% | LR: 0.000761 | Time: 50.5s
+Epoch  70/200 | Train Loss: 0.5733 | Valid Acc: 94.28% | Test Acc: 93.69% | LR: 0.000727 | Time: 53.0s
+Epoch  75/200 | Train Loss: 0.5648 | Valid Acc: 94.26% | Test Acc: 93.69% | LR: 0.000692 | Time: 50.0s
+Epoch  80/200 | Train Loss: 0.5591 | Valid Acc: 94.30% | Test Acc: 94.13% | LR: 0.000655 | Time: 53.0s
+Epoch  85/200 | Train Loss: 0.5534 | Valid Acc: 94.22% | Test Acc: 94.13% | LR: 0.000617 | Time: 50.4s
+Epoch  90/200 | Train Loss: 0.5514 | Valid Acc: 94.72% | Test Acc: 94.17% | LR: 0.000579 | Time: 52.6s
+Epoch  95/200 | Train Loss: 0.5439 | Valid Acc: 94.50% | Test Acc: 94.17% | LR: 0.000540 | Time: 49.9s
+Epoch 100/200 | Train Loss: 0.5428 | Valid Acc: 94.94% | Test Acc: 94.35% | LR: 0.000501 | Time: 53.0s
+Results saved to ./results/cifar10_resnet18_AdamW_seed42_20260319_133150.json
+Epoch 105/200 | Train Loss: 0.5402 | Valid Acc: 94.72% | Test Acc: 94.35% | LR: 0.000461 | Time: 50.4s
+Epoch 110/200 | Train Loss: 0.5348 | Valid Acc: 95.22% | Test Acc: 94.55% | LR: 0.000422 | Time: 53.4s
+Epoch 115/200 | Train Loss: 0.5327 | Valid Acc: 94.94% | Test Acc: 94.55% | LR: 0.000384 | Time: 50.2s
+Epoch 120/200 | Train Loss: 0.5295 | Valid Acc: 94.98% | Test Acc: 94.60% | LR: 0.000346 | Time: 53.4s
+Epoch 125/200 | Train Loss: 0.5269 | Valid Acc: 95.16% | Test Acc: 94.60% | LR: 0.000309 | Time: 50.4s
+Epoch 130/200 | Train Loss: 0.5241 | Valid Acc: 95.16% | Test Acc: 94.56% | LR: 0.000274 | Time: 52.6s
+Epoch 135/200 | Train Loss: 0.5229 | Valid Acc: 95.44% | Test Acc: 94.56% | LR: 0.000240 | Time: 50.0s
+Epoch 140/200 | Train Loss: 0.5214 | Valid Acc: 95.30% | Test Acc: 94.81% | LR: 0.000207 | Time: 52.6s
+Epoch 145/200 | Train Loss: 0.5217 | Valid Acc: 95.26% | Test Acc: 94.81% | LR: 0.000176 | Time: 50.0s
+Epoch 150/200 | Train Loss: 0.5183 | Valid Acc: 95.30% | Test Acc: 95.01% | LR: 0.000147 | Time: 53.0s
+Results saved to ./results/cifar10_resnet18_AdamW_seed42_20260319_133150.json
+Epoch 155/200 | Train Loss: 0.5185 | Valid Acc: 95.40% | Test Acc: 95.01% | LR: 0.000121 | Time: 50.4s
+Epoch 160/200 | Train Loss: 0.5164 | Valid Acc: 95.34% | Test Acc: 95.08% | LR: 0.000096 | Time: 52.6s
+Epoch 165/200 | Train Loss: 0.5144 | Valid Acc: 95.40% | Test Acc: 95.08% | LR: 0.000075 | Time: 49.6s
+Epoch 170/200 | Train Loss: 0.5148 | Valid Acc: 95.44% | Test Acc: 94.92% | LR: 0.000055 | Time: 53.8s
+Epoch 175/200 | Train Loss: 0.5134 | Valid Acc: 95.40% | Test Acc: 94.92% | LR: 0.000039 | Time: 50.0s
+Epoch 180/200 | Train Loss: 0.5146 | Valid Acc: 95.40% | Test Acc: 95.00% | LR: 0.000025 | Time: 53.3s
+Epoch 185/200 | Train Loss: 0.5126 | Valid Acc: 95.44% | Test Acc: 95.00% | LR: 0.000015 | Time: 50.1s
+Epoch 190/200 | Train Loss: 0.5123 | Valid Acc: 95.40% | Test Acc: 95.04% | LR: 0.000007 | Time: 53.3s
+Epoch 195/200 | Train Loss: 0.5125 | Valid Acc: 95.60% | Test Acc: 95.04% | LR: 0.000003 | Time: 50.5s
+Epoch 200/200 | Train Loss: 0.5123 | Valid Acc: 95.42% | Test Acc: 95.13% | LR: 0.000001 | Time: 53.7s
+Results saved to ./results/cifar10_resnet18_AdamW_seed42_20260319_133150.json
+Results saved to ./results/cifar10_resnet18_AdamW_seed42_20260319_133150.json
+
+============================================================
+Training complete: cifar10_resnet18_AdamW_seed42
+Best Valid Acc: 95.60%
+Best Test Acc:  95.21%
+Avg Time/Epoch: 50.4s
+============================================================

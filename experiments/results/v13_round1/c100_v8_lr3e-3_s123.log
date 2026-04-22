@@ -1,0 +1,12 @@
+Device: cuda
+Dataset: cifar100 (100 classes)
+Model: resnet18 (11,220,132 params)
+Optimizer: LAKTJU
+
+============================================================
+Starting training: cifar100_resnet18_LAKTJU_seed123
+============================================================
+
+<sys>:0: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Epoch   1/200 | Train Loss: 4.0383 | Valid Acc: 16.14% | Test Acc: 0.00% | LR: 0.003000 s=0.010 | Time: 15.7s
+run_v13_round1.sh: 第 24 行： 2589862 已杀死               python train_laktju.py --optimizer LAKTJU --dataset cifar100 --model resnet18 --lr 0.003 --a_lr_ratio 0.1 --weight_decay 1e-4 --epochs 200 --seed 123 --label_smoothing 0.1 --homotopy_speed 2.0 --kf_damping 1e-3 --warmup 20 --c_base 1.0 --kappa 5.0 --save_dir ./results/v13_round1 --data_dir ./dataset
