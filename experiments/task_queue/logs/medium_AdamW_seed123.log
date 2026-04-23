@@ -1,0 +1,30 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Token indices sequence length is longer than the specified maximum sequence length for this model (1063 > 1024). Running this sequence through the model will result in indexing errors
+Model: GPT-2 medium (354.8M parameters)
+Loading dataset: wikitext...
+Tokenizing...
+  Tokenizing train (1165029 texts)...
+  Tokenizing val (2461 texts)...
+Train tokens: 117,920,140, Val tokens: 247,289
+Train: 115156 chunks, Val: 241 chunks
+
+======================================================================
+GPT-2 medium | Optimizer: AdamW_lr0.0006 | Seed: 123
+LR: 0.0006 | WD: 0.1 | Betas: (0.9, 0.95)
+Steps: 10000 | Batch: 4x4=16
+Seq len: 1024 | Tokens/step: 16,384
+======================================================================
+`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.
+Traceback (most recent call last):
+  File "/home/hadoop/workstations/LAFTJU/experiments/train_gpt2_lm.py", line 499, in <module>
+    train(args)
+  File "/home/hadoop/workstations/LAFTJU/experiments/train_gpt2_lm.py", line 394, in train
+    scaler.scale(loss).backward()
+  File "/home/hadoop/miniconda3/envs/python3.12/lib/python3.12/site-packages/torch/_tensor.py", line 630, in backward
+    torch.autograd.backward(
+  File "/home/hadoop/miniconda3/envs/python3.12/lib/python3.12/site-packages/torch/autograd/__init__.py", line 364, in backward
+    _engine_run_backward(
+  File "/home/hadoop/miniconda3/envs/python3.12/lib/python3.12/site-packages/torch/autograd/graph.py", line 865, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 786.00 MiB. GPU 0 has a total capacity of 94.97 GiB of which 51.88 MiB is free. Process 3924772 has 24.08 GiB memory in use. Including non-PyTorch memory, this process has 16.98 GiB memory in use. Process 4021711 has 17.94 GiB memory in use. Process 4021714 has 17.94 GiB memory in use. Process 4021786 has 17.94 GiB memory in use. Of the allocated memory 15.03 GiB is allocated by PyTorch, and 1.29 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

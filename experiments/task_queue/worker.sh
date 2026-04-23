@@ -34,8 +34,8 @@ with open('$f', 'w') as fh: json.dump(t, fh, indent=2)
 }
 
 while true; do
-    echo "[$(date +%H:%M:%S)] Pulling latest tasks..."
-    git pull --rebase origin main 2>/dev/null || git pull origin main
+    echo "[$(date +%H:%M:%S)] Checking for tasks..."
+    # git pull --rebase origin main 2>/dev/null || git pull origin main
 
     FOUND=0
     for task_file in "$TASK_DIR"/*.json; do
@@ -49,14 +49,9 @@ while true; do
         echo "[$(date +%H:%M:%S)] Claiming task: $TASK_ID"
         claim_task "$task_file" || continue
 
-        # Push claim to prevent other workers from taking it
-        git add "$task_file"
-        git commit -m "worker $WORKER_ID: claim $TASK_ID" 2>/dev/null
-        git push origin main 2>/dev/null || {
-            echo "Push conflict, resetting claim..."
-            git pull --rebase origin main
-            continue
-        }
+        # Push claim (skipped - no remote)
+        git add "$task_file" 2>/dev/null
+        git commit -m "worker $WORKER_ID: claim $TASK_ID" 2>/dev/null || true
 
         FOUND=1
         echo "[$(date +%H:%M:%S)] Running: $CMD"
@@ -75,12 +70,9 @@ while true; do
         mark_done "$task_file" "$RESULT"
 
         # Commit and push results
+        # Commit results locally
         git add "$task_file" "$LOG" results_gpt2/ 2>/dev/null
-        git commit -m "worker $WORKER_ID: done $TASK_ID" 2>/dev/null
-        git push origin main 2>/dev/null || {
-            git pull --rebase origin main
-            git push origin main
-        }
+        git commit -m "worker $WORKER_ID: done $TASK_ID" 2>/dev/null || true
 
         echo "[$(date +%H:%M:%S)] Results pushed for $TASK_ID"
         break  # Re-pull to check for new tasks
