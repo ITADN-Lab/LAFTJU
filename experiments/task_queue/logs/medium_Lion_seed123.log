@@ -1,0 +1,132 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Token indices sequence length is longer than the specified maximum sequence length for this model (1063 > 1024). Running this sequence through the model will result in indexing errors
+Model: GPT-2 medium (354.8M parameters)
+Loading dataset: wikitext...
+Tokenizing...
+  Tokenizing train (1165029 texts)...
+  Tokenizing val (2461 texts)...
+Train tokens: 117,920,140, Val tokens: 247,289
+Train: 115156 chunks, Val: 241 chunks
+
+======================================================================
+GPT-2 medium | Optimizer: Lion_lr0.0001 | Seed: 123
+LR: 0.0001 | WD: 1.0 | Betas: (0.9, 0.99)
+Steps: 10000 | Batch: 4x4=16
+Seq len: 1024 | Tokens/step: 16,384
+======================================================================
+`loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.
+  step    100/10000 | loss=9.6160 | ppl=15002.50 | lr=1.00e-05 | 13.5K tok/s | 121s
+  step    200/10000 | loss=8.2768 | ppl=3931.71 | lr=2.00e-05 | 13.6K tok/s | 242s
+  step    300/10000 | loss=7.1840 | ppl=1318.19 | lr=3.00e-05 | 13.6K tok/s | 362s
+  step    400/10000 | loss=6.8009 | ppl=898.70 | lr=4.00e-05 | 13.6K tok/s | 483s
+  step    500/10000 | loss=6.4793 | ppl=651.49 | lr=5.00e-05 | 13.6K tok/s | 603s
+  step    600/10000 | loss=6.2089 | ppl=497.14 | lr=6.00e-05 | 13.6K tok/s | 724s
+  step    700/10000 | loss=6.0486 | ppl=423.53 | lr=7.00e-05 | 13.6K tok/s | 846s
+  step    800/10000 | loss=5.9146 | ppl=370.41 | lr=8.00e-05 | 13.5K tok/s | 968s
+  step    900/10000 | loss=5.8014 | ppl=330.75 | lr=9.00e-05 | 13.5K tok/s | 1089s
+  step   1000/10000 | loss=5.7064 | ppl=300.78 | lr=1.00e-04 | 13.5K tok/s | 1210s
+  [EVAL] step 1000 | val_loss=5.5920 | val_ppl=268.28 | best_ppl=268.28 (step 1000) | 1217s
+  step   1100/10000 | loss=5.6140 | ppl=274.24 | lr=1.00e-04 | 13.5K tok/s | 1338s
+  step   1200/10000 | loss=5.5217 | ppl=250.05 | lr=9.99e-05 | 13.5K tok/s | 1458s
+  step   1300/10000 | loss=5.3966 | ppl=220.67 | lr=9.97e-05 | 13.5K tok/s | 1578s
+  step   1400/10000 | loss=5.3072 | ppl=201.79 | lr=9.95e-05 | 13.5K tok/s | 1700s
+  step   1500/10000 | loss=5.2276 | ppl=186.35 | lr=9.92e-05 | 13.5K tok/s | 1822s
+  step   1600/10000 | loss=5.1345 | ppl=169.78 | lr=9.89e-05 | 13.5K tok/s | 1944s
+  step   1700/10000 | loss=5.0334 | ppl=153.46 | lr=9.85e-05 | 13.5K tok/s | 2066s
+  step   1800/10000 | loss=4.9442 | ppl=140.35 | lr=9.81e-05 | 13.5K tok/s | 2188s
+  step   1900/10000 | loss=4.8740 | ppl=130.84 | lr=9.76e-05 | 13.5K tok/s | 2308s
+  step   2000/10000 | loss=4.8037 | ppl=121.96 | lr=9.70e-05 | 13.5K tok/s | 2428s
+  [EVAL] step 2000 | val_loss=4.6629 | val_ppl=105.94 | best_ppl=105.94 (step 2000) | 2436s
+  step   2100/10000 | loss=4.7384 | ppl=114.25 | lr=9.64e-05 | 13.5K tok/s | 2556s
+  step   2200/10000 | loss=4.6619 | ppl=105.83 | lr=9.57e-05 | 13.5K tok/s | 2677s
+  step   2300/10000 | loss=4.6451 | ppl=104.07 | lr=9.49e-05 | 13.5K tok/s | 2799s
+  step   2400/10000 | loss=4.5795 | ppl=97.47 | lr=9.41e-05 | 13.5K tok/s | 2921s
+  step   2500/10000 | loss=4.5231 | ppl=92.12 | lr=9.33e-05 | 13.5K tok/s | 3043s
+  step   2600/10000 | loss=4.4731 | ppl=87.63 | lr=9.24e-05 | 13.5K tok/s | 3163s
+  step   2700/10000 | loss=4.4124 | ppl=82.46 | lr=9.15e-05 | 13.5K tok/s | 3283s
+  step   2800/10000 | loss=4.3760 | ppl=79.52 | lr=9.05e-05 | 13.5K tok/s | 3405s
+  step   2900/10000 | loss=4.2943 | ppl=73.28 | lr=8.94e-05 | 13.5K tok/s | 3526s
+  step   3000/10000 | loss=4.2455 | ppl=69.79 | lr=8.83e-05 | 13.5K tok/s | 3648s
+  [EVAL] step 3000 | val_loss=4.1282 | val_ppl=62.07 | best_ppl=62.07 (step 3000) | 3656s
+  step   3100/10000 | loss=4.2150 | ppl=67.69 | lr=8.72e-05 | 13.4K tok/s | 3778s
+  step   3200/10000 | loss=4.1677 | ppl=64.57 | lr=8.60e-05 | 13.4K tok/s | 3899s
+  step   3300/10000 | loss=4.1252 | ppl=61.88 | lr=8.47e-05 | 13.4K tok/s | 4021s
+  step   3400/10000 | loss=4.1128 | ppl=61.11 | lr=8.35e-05 | 13.4K tok/s | 4142s
+  step   3500/10000 | loss=4.0517 | ppl=57.50 | lr=8.21e-05 | 13.4K tok/s | 4264s
+  step   3600/10000 | loss=4.0312 | ppl=56.33 | lr=8.08e-05 | 13.4K tok/s | 4386s
+  step   3700/10000 | loss=3.9976 | ppl=54.47 | lr=7.94e-05 | 13.4K tok/s | 4507s
+  step   3800/10000 | loss=3.9706 | ppl=53.01 | lr=7.80e-05 | 13.4K tok/s | 4629s
+  step   3900/10000 | loss=3.9338 | ppl=51.10 | lr=7.65e-05 | 13.5K tok/s | 4751s
+  step   4000/10000 | loss=3.9366 | ppl=51.25 | lr=7.50e-05 | 13.5K tok/s | 4872s
+  [EVAL] step 4000 | val_loss=3.8108 | val_ppl=45.19 | best_ppl=45.19 (step 4000) | 4880s
+  step   4100/10000 | loss=3.8926 | ppl=49.04 | lr=7.35e-05 | 13.4K tok/s | 5001s
+  step   4200/10000 | loss=3.8734 | ppl=48.10 | lr=7.19e-05 | 13.4K tok/s | 5123s
+  step   4300/10000 | loss=3.8582 | ppl=47.38 | lr=7.03e-05 | 13.4K tok/s | 5244s
+  step   4400/10000 | loss=3.8317 | ppl=46.14 | lr=6.87e-05 | 13.4K tok/s | 5366s
+  step   4500/10000 | loss=3.8096 | ppl=45.13 | lr=6.71e-05 | 13.4K tok/s | 5487s
+  step   4600/10000 | loss=3.8058 | ppl=44.96 | lr=6.55e-05 | 13.4K tok/s | 5609s
+  step   4700/10000 | loss=3.7784 | ppl=43.75 | lr=6.38e-05 | 13.4K tok/s | 5730s
+  step   4800/10000 | loss=3.7442 | ppl=42.27 | lr=6.21e-05 | 13.4K tok/s | 5852s
+  step   4900/10000 | loss=3.7472 | ppl=42.40 | lr=6.04e-05 | 13.4K tok/s | 5974s
+  step   5000/10000 | loss=3.7131 | ppl=40.98 | lr=5.87e-05 | 13.4K tok/s | 6095s
+  [EVAL] step 5000 | val_loss=3.6224 | val_ppl=37.43 | best_ppl=37.43 (step 5000) | 6102s
+  step   5100/10000 | loss=3.6999 | ppl=40.44 | lr=5.70e-05 | 13.4K tok/s | 6224s
+  step   5200/10000 | loss=3.6867 | ppl=39.91 | lr=5.52e-05 | 13.4K tok/s | 6346s
+  step   5300/10000 | loss=3.6646 | ppl=39.04 | lr=5.35e-05 | 13.4K tok/s | 6467s
+  step   5400/10000 | loss=3.6728 | ppl=39.36 | lr=5.17e-05 | 13.4K tok/s | 6588s
+  step   5500/10000 | loss=3.6640 | ppl=39.02 | lr=5.00e-05 | 13.4K tok/s | 6710s
+  step   5600/10000 | loss=3.6331 | ppl=37.83 | lr=4.83e-05 | 13.4K tok/s | 6831s
+  step   5700/10000 | loss=3.6478 | ppl=38.39 | lr=4.65e-05 | 13.4K tok/s | 6953s
+  step   5800/10000 | loss=3.6344 | ppl=37.88 | lr=4.48e-05 | 13.4K tok/s | 7074s
+  step   5900/10000 | loss=3.5953 | ppl=36.43 | lr=4.30e-05 | 13.4K tok/s | 7195s
+  step   6000/10000 | loss=3.6009 | ppl=36.63 | lr=4.13e-05 | 13.4K tok/s | 7317s
+  [EVAL] step 6000 | val_loss=3.4792 | val_ppl=32.43 | best_ppl=32.43 (step 6000) | 7325s
+  step   6100/10000 | loss=3.5678 | ppl=35.44 | lr=3.96e-05 | 13.4K tok/s | 7447s
+  step   6200/10000 | loss=3.5644 | ppl=35.32 | lr=3.79e-05 | 13.4K tok/s | 7568s
+  step   6300/10000 | loss=3.5606 | ppl=35.18 | lr=3.62e-05 | 13.4K tok/s | 7690s
+  step   6400/10000 | loss=3.5503 | ppl=34.82 | lr=3.45e-05 | 13.4K tok/s | 7811s
+  step   6500/10000 | loss=3.5171 | ppl=33.69 | lr=3.29e-05 | 13.4K tok/s | 7932s
+  step   6600/10000 | loss=3.4926 | ppl=32.87 | lr=3.13e-05 | 13.4K tok/s | 8054s
+  step   6700/10000 | loss=3.5068 | ppl=33.34 | lr=2.97e-05 | 13.4K tok/s | 8175s
+  step   6800/10000 | loss=3.4960 | ppl=32.98 | lr=2.81e-05 | 13.4K tok/s | 8297s
+  step   6900/10000 | loss=3.4863 | ppl=32.66 | lr=2.65e-05 | 13.4K tok/s | 8419s
+  step   7000/10000 | loss=3.4874 | ppl=32.70 | lr=2.50e-05 | 13.4K tok/s | 8540s
+  [EVAL] step 7000 | val_loss=3.3720 | val_ppl=29.14 | best_ppl=29.14 (step 7000) | 8548s
+  step   7100/10000 | loss=3.4737 | ppl=32.26 | lr=2.35e-05 | 13.4K tok/s | 8670s
+  step   7200/10000 | loss=3.4346 | ppl=31.02 | lr=2.20e-05 | 13.4K tok/s | 8792s
+  step   7300/10000 | loss=3.3574 | ppl=28.71 | lr=2.06e-05 | 13.4K tok/s | 8913s
+  step   7400/10000 | loss=3.3359 | ppl=28.10 | lr=1.92e-05 | 13.4K tok/s | 9034s
+  step   7500/10000 | loss=3.3469 | ppl=28.42 | lr=1.79e-05 | 13.4K tok/s | 9156s
+  step   7600/10000 | loss=3.3426 | ppl=28.29 | lr=1.65e-05 | 13.4K tok/s | 9277s
+  step   7700/10000 | loss=3.3404 | ppl=28.23 | lr=1.53e-05 | 13.4K tok/s | 9399s
+  step   7800/10000 | loss=3.3381 | ppl=28.16 | lr=1.40e-05 | 13.4K tok/s | 9520s
+  step   7900/10000 | loss=3.3212 | ppl=27.69 | lr=1.28e-05 | 13.4K tok/s | 9642s
+  step   8000/10000 | loss=3.3239 | ppl=27.77 | lr=1.17e-05 | 13.4K tok/s | 9763s
+  [EVAL] step 8000 | val_loss=3.2978 | val_ppl=27.05 | best_ppl=27.05 (step 8000) | 9771s
+  step   8100/10000 | loss=3.3194 | ppl=27.64 | lr=1.06e-05 | 13.4K tok/s | 9893s
+  step   8200/10000 | loss=3.3051 | ppl=27.25 | lr=9.55e-06 | 13.4K tok/s | 10014s
+  step   8300/10000 | loss=3.2989 | ppl=27.08 | lr=8.55e-06 | 13.4K tok/s | 10136s
+  step   8400/10000 | loss=3.2999 | ppl=27.11 | lr=7.60e-06 | 13.4K tok/s | 10257s
+  step   8500/10000 | loss=3.2745 | ppl=26.43 | lr=6.70e-06 | 13.4K tok/s | 10379s
+  step   8600/10000 | loss=3.2750 | ppl=26.44 | lr=5.85e-06 | 13.4K tok/s | 10500s
+  step   8700/10000 | loss=3.3020 | ppl=27.17 | lr=5.06e-06 | 13.4K tok/s | 10622s
+  step   8800/10000 | loss=3.2812 | ppl=26.61 | lr=4.32e-06 | 13.4K tok/s | 10741s
+  step   8900/10000 | loss=3.2901 | ppl=26.84 | lr=3.64e-06 | 13.5K tok/s | 10823s
+  step   9000/10000 | loss=3.2727 | ppl=26.38 | lr=3.02e-06 | 13.5K tok/s | 10905s
+  [EVAL] step 9000 | val_loss=3.2541 | val_ppl=25.90 | best_ppl=25.90 (step 9000) | 10910s
+  step   9100/10000 | loss=3.2900 | ppl=26.84 | lr=2.45e-06 | 13.6K tok/s | 10992s
+  step   9200/10000 | loss=3.2823 | ppl=26.64 | lr=1.94e-06 | 13.6K tok/s | 11102s
+  step   9300/10000 | loss=3.2787 | ppl=26.54 | lr=1.49e-06 | 13.6K tok/s | 11224s
+  step   9400/10000 | loss=3.2709 | ppl=26.33 | lr=1.09e-06 | 13.6K tok/s | 11345s
+  step   9500/10000 | loss=3.2726 | ppl=26.38 | lr=7.60e-07 | 13.6K tok/s | 11466s
+  step   9600/10000 | loss=3.2470 | ppl=25.71 | lr=4.87e-07 | 13.6K tok/s | 11586s
+  step   9700/10000 | loss=3.2865 | ppl=26.75 | lr=2.74e-07 | 13.6K tok/s | 11706s
+  step   9800/10000 | loss=3.2732 | ppl=26.40 | lr=1.22e-07 | 13.6K tok/s | 11827s
+  step   9900/10000 | loss=3.2762 | ppl=26.47 | lr=3.05e-08 | 13.6K tok/s | 11947s
+  step  10000/10000 | loss=3.2764 | ppl=26.48 | lr=0.00e+00 | 13.6K tok/s | 12069s
+  [EVAL] step 10000 | val_loss=3.2443 | val_ppl=25.64 | best_ppl=25.64 (step 10000) | 12077s
+
+  => Best val PPL: 25.64 (step 10000)
+  => Final val PPL: 25.64
+  => Saved to /home/hadoop/workstations/LAFTJU/experiments/results_gpt2/gpt2_medium_Lion_lr0.0001_seed123.json
+  => Total time: 201.4 min
